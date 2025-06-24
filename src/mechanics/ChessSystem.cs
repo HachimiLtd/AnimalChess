@@ -45,18 +45,12 @@ public partial class ChessSystem : Node2D
 
     public void GameInit()
     {
-        //foreach(PieceInstance piece in _pieceInstanceList)
-        //{
-        //    piece.QueueFree();
-        //}
-        //_pieceInstanceList.Clear();
         for(int i=1;i<=_groundSize.X;i++)
             for(int j=1;j<=_groundSize.Y;j++)
             {
                 DestroyPieceInstance(new Vector2I(i,j));
             }
-
-        //////////////////////////////////
+        ////////////////////////////////////??
     }
     private void CreatePieceInstance(Vector2I pos,RoleType player,PieceType type)
     {
@@ -78,7 +72,7 @@ public partial class ChessSystem : Node2D
         _pieceLayer[pos.X][pos.Y]=null;
     }
     
-    public void SubmitOperation(ChessOperation operation)
+    public void HandleOperation(ChessOperation operation)
     {
         Vector2I from = operation.From;
         Vector2I to = operation.To;
@@ -100,7 +94,7 @@ public partial class ChessSystem : Node2D
     public void SyncStatusBetweenPlayers(){}
     */
 
-    public void SubmitPieceSelection(Vector2I position)
+    public void HandlePieceSelection(Vector2I position)
     {
         PieceInstance inst = _pieceLayer[position.X][position.Y];
         if(inst == null || inst.Player != PlayerRole)

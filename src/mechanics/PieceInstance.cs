@@ -78,7 +78,7 @@ public abstract partial class PieceInstance : Button
     {
         if(!_system.CurrentlyPlaying)
             return;
-        _system.SubmitPieceSelection(_gridPosition);
+        _system.HandlePieceSelection(_gridPosition);
     }
 
 
@@ -86,7 +86,7 @@ public abstract partial class PieceInstance : Button
     public void HandleSubmitMove(Vector2I dest)
     {
         ClearHighlights();
-        _system.SubmitOperation(new ChessOperation(_gridPosition,dest));
+        _system.HandleOperation(new ChessOperation(_gridPosition,dest));
     }
 
     

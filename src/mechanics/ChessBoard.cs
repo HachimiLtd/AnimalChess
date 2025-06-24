@@ -31,8 +31,18 @@ public partial class ChessBoard : TileMapLayer
         }
 
 
-
-        ///TODO///
+        for(int i=0;i<_groundSize.X;i++)
+            for(int j=0;j<_groundSize.Y;j++)
+            {
+                TileData data = GetCellTileData(new Vector2I(i,j));
+                if(data==null)
+                {
+                    groundLayer[i+1][j+1] = GroundType.BOUNDARY;
+                    continue;
+                }
+                GroundType type = groundTypeFromString( (String)data.GetCustomData("GroundType") );
+                groundLayer[i+1][j+1] = type;
+            }
     }
 
     public static GroundType groundTypeFromString(String s){

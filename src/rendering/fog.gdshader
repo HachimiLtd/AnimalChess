@@ -1,14 +1,32 @@
-shader_type spatial;
+shader_type canvas_item;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform int light_status[4096];
+const int board_height = 12;
+const int board_width = 12;
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-}
+	//board_height = 12;
+	//board_width = 12;
+	//vec4 overlay_sample = texture(overlay, UV);
+	vec4 screen_sample = texture(screen_texture, SCREEN_UV);
+	//COLOR.rgb *= 1.5;
+	int x = int(UV.x*float(board_width));
+	int y = int(UV.y*float(board_height));
+	float ratio = 0.;
+	int index = x+y*board_width;
+	if(light_status[index]==1)
+		ratio = 1.;
+	else if(light_status[index]==2)
+		ratio = .5;
+	else {
+		if(x>0 && light_status[index-1]==1) ratio = .4;
+		else if(y>0 && light_status[index-board_width]==1) ratio = .4;
+		else if(x<board_width-1 && light_status[index+1]==1) ratio = .4;
+		else if(y<board_height-1 && light_status[index+board_height]==1) ratio = .4;
+	}
 
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}
+	COLOR.rgb = screen_sample.rgb * ratio;
+	//COLOR.rgb = screen_sample.rgb * COLOR.rgb;
+	//COLOR.a = 1.;
+}

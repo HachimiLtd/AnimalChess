@@ -4,6 +4,12 @@ using Godot;
 
 public record struct ChessOperation(Vector2I From, Vector2I To);
 
+public struct ChessPieceInitialArrangement
+{
+    public PieceType[][] typeMap;
+    public RoleType[][] roleMap;
+}
+
 public enum PieceType
 {
     EMPTY,

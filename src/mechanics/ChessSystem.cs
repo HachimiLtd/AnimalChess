@@ -15,7 +15,15 @@ public enum MoveValidation
 
 public partial class ChessSystem : Node2D
 {
-    private static PackedScene _resPieceInstance = (PackedScene)GD.Load("res://scenes/piece_instance.tscn");
+    //private static PackedScene _resPieceInstance = (PackedScene)GD.Load("res://scenes/piece_instance.tscn");
+    private static Dictionary<PieceType,PackedScene> _resPieceInstances;
+    static ChessSystem()
+    {
+        _resPieceInstances = new Dictionary<PieceType, PackedScene>
+        {
+            [PieceType.CAT] = (PackedScene)GD.Load("res://scenes/pieces/piece_cat.tscn")
+        };
+    }
 
     private Vector2I _groundSize;
     private GroundType[][] _groundLayer;
@@ -32,9 +40,8 @@ public partial class ChessSystem : Node2D
     public RoleType PlayerRole;
     public bool CurrentlyPlaying = false;
 
-    public ChessSystem(){
-        _chessBoard.LoadLayers(this);
-    }
+    public bool HightlightsExist = false;
+
     public override void _EnterTree()
     {
         base._EnterTree();
@@ -43,26 +50,38 @@ public partial class ChessSystem : Node2D
         _chessBoard = (ChessBoard)GetNode("ChessBoard");
     }
 
-    public void GameInit()
+    public void GameInit(ChessPieceInitialArrangement pieceArrangement,RoleType player)
     {
         for(int i=1;i<=_groundSize.X;i++)
             for(int j=1;j<=_groundSize.Y;j++)
             {
                 DestroyPieceInstance(new Vector2I(i,j));
             }
-        ////////////////////////////////////??
+        
+        _chessBoard.LoadLayers(this);
+        for(int i=0;i<_groundSize.X;i++)
+            for(int j=0;j<_groundSize.Y;i++)
+            {
+                if(pieceArrangement.typeMap[i][j]==PieceType.EMPTY)
+                    continue;
+                CreatePieceInstance(new Vector2I(i+1,j+1),pieceArrangement.roleMap[i][j],pieceArrangement.typeMap[i][j]);
+            }
+        
+        PlayerRole = player;
+        HightlightsExist = false;
     }
     private void CreatePieceInstance(Vector2I pos,RoleType player,PieceType type)
     {
         if(_pieceLayer[pos.X][pos.Y] != null)
             //wtf
             return;
-        PieceInstance instance = (PieceInstance)_resPieceInstance.Instantiate();
+        PieceInstance instance = (PieceInstance)_resPieceInstances[type].Instantiate();
         instance.Player = player;
         instance.GridPosition = pos;
 
         MountPieces.AddChild(instance);
         _pieceLayer[pos.X][pos.Y] = instance;
+        instance.Choosable = PlayerRole==player;
         //_pieceInstanceList.Add(instance);
     }
     private void DestroyPieceInstance(Vector2I pos)
@@ -88,6 +107,7 @@ public partial class ChessSystem : Node2D
         instance.GridPosition = to;
         _pieceLayer[from.X][from.Y] = null;
         _pieceLayer[to.X][to.Y] = instance;
+        HightlightsExist = false;
     }
 
     /*
@@ -100,7 +120,10 @@ public partial class ChessSystem : Node2D
         if(inst == null || inst.Player != PlayerRole)
             return;
         
-        inst.CreateHighLights();
+        if(!HightlightsExist)
+            inst.CreateHighLights();
+        else
+            inst.ClearHighlights();
     }
 
 }

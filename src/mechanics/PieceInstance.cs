@@ -5,12 +5,6 @@ using Godot;
 public abstract partial class PieceInstance : Button
 {
     protected static PackedScene _resPieceHighlight = (PackedScene)GD.Load("res://scenes/piece_highlight.tscn");
-    private static Dictionary<PieceType,PackedScene> _resPieceInstances;
-    static PieceInstance()
-    {
-        _resPieceInstances = new Dictionary<PieceType, PackedScene>();
-        _resPieceInstances[PieceType.CAT] = (PackedScene)GD.Load("res://scenes/pieces/piece_cat.tscn");
-    }
 
     protected ChessSystem _system;
 
@@ -49,6 +43,7 @@ public abstract partial class PieceInstance : Button
 
     protected void CreateHighlight( Vector2I at )
     {
+        _system.HightlightsExist = true;
         PieceHighlight highlight = (PieceHighlight)_resPieceHighlight.Instantiate();
 
         _system.MountHightlights.AddChild(highlight);
@@ -58,6 +53,7 @@ public abstract partial class PieceInstance : Button
 
     public void ClearHighlights()
     {
+        _system.HightlightsExist = false;
         foreach(Node child in GetChildren())
         {
             if(child is PieceHighlight)
@@ -76,7 +72,7 @@ public abstract partial class PieceInstance : Button
 
     public void HandlePressed()
     {
-        if(!_system.CurrentlyPlaying)
+        if(!_system.CurrentlyPlaying && !Choosable)
             return;
         _system.HandlePieceSelection(_gridPosition);
     }

@@ -1,15 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4b1l5kn6nlrh"]
+[gd_scene load_steps=2 format=3 uid="uid://c4b1l5kn6nlrh"]
 
-[ext_resource type="Script" uid="uid://bet8xa82721tu" path="res://src/mechanics/PieceInstance.cs" id="1_wkovn"]
 [ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="2_kmm26"]
 
 [node name="PieceInstance" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
 offset_right = 48.0
 offset_bottom = 48.0
-script = ExtResource("1_wkovn")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 offset_right = 48.0
 offset_bottom = 48.0
 theme = ExtResource("2_kmm26")

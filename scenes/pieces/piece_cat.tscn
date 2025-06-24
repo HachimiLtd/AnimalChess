@@ -5,5 +5,4 @@
 [node name="PieceInstance" instance=ExtResource("1_hgcsf")]
 
 [node name="Label" parent="." index="0"]
-layout_mode = 0
 text = "CAT"

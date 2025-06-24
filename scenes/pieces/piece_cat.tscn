@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c88qn5udpfd87"]
+
+[ext_resource type="PackedScene" uid="uid://c4b1l5kn6nlrh" path="res://scenes/piece_instance.tscn" id="1_hgcsf"]
+
+[node name="PieceInstance" instance=ExtResource("1_hgcsf")]
+
+[node name="Label" parent="." index="0"]
+layout_mode = 0
+text = "CAT"

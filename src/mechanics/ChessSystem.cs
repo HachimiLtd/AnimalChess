@@ -157,8 +157,11 @@ public partial class ChessSystem : Node2D
             return;
 
         int callerId = Multiplayer.GetRemoteSenderId();
-        instance.ClearHighlights();
-        HighlightOwner = null;
+        if(instance == HighlightOwner)
+        {
+            instance.ClearHighlights();
+            HighlightOwner = null;
+        }
 
         if (_pieceLayer[to.X][to.Y] != null)
         {

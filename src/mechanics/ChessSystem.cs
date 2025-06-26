@@ -41,7 +41,8 @@ public partial class ChessSystem : Node2D
     public RoleType PlayerRole;
     public bool CurrentlyPlaying = false;
 
-    public bool HightlightsExist = false;
+    //public bool HightlightsExist = false;
+    public PieceInstance HighlightOwner = null;
 
     ChessSystem()
     {
@@ -69,7 +70,7 @@ public partial class ChessSystem : Node2D
             [PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.CAT, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
@@ -84,7 +85,7 @@ public partial class ChessSystem : Node2D
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P2, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
@@ -105,6 +106,8 @@ public partial class ChessSystem : Node2D
             {
                 DestroyPieceInstance(new Vector2I(i, j));
             }
+        foreach(var child in MountHightlights.GetChildren())
+            child.QueueFree();
 
         _chessBoard.LoadLayers(this);
         for (int i = 0; i < _groundSize.X; i++)
@@ -116,7 +119,7 @@ public partial class ChessSystem : Node2D
             }
 
         PlayerRole = player;
-        HightlightsExist = false;
+        HighlightOwner = null;
         _fog.UpdateFog();
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
@@ -154,10 +157,8 @@ public partial class ChessSystem : Node2D
             return;
 
         int callerId = Multiplayer.GetRemoteSenderId();
-        if (callerId != 0)
-        {
-            instance.ClearHighlights();
-        }
+        instance.ClearHighlights();
+        HighlightOwner = null;
 
         if (_pieceLayer[to.X][to.Y] != null)
         {
@@ -166,7 +167,7 @@ public partial class ChessSystem : Node2D
         instance.GridPosition = to;
         _pieceLayer[from.X][from.Y] = null;
         _pieceLayer[to.X][to.Y] = instance;
-        HightlightsExist = false;
+        
 
         Tween tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(()=>{_fog.UpdateFog();})).SetDelay(ACGlobal.ANIMATION_TIME_1/2.0);
@@ -184,10 +185,13 @@ public partial class ChessSystem : Node2D
         if (inst == null || inst.Player != PlayerRole)
             return;
 
-        if (!HightlightsExist)
+        if (HighlightOwner==null)
             inst.CreateHighLights();
         else
-            inst.ClearHighlights();
+        {
+            HighlightOwner.ClearHighlights();
+            HighlightOwner = null;
+        }
     }
 
 }

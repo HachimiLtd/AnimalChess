@@ -48,7 +48,7 @@ public abstract partial class PieceInstance : Button
 
     protected void CreateHighlight( Vector2I at )
     {
-        _system.HightlightsExist = true;
+        _system.HighlightOwner = this;
         PieceHighlight highlight = (PieceHighlight)_resPieceHighlight.Instantiate();
 
         highlights.Add(highlight);
@@ -59,7 +59,6 @@ public abstract partial class PieceInstance : Button
 
     public void ClearHighlights()
     {
-        _system.HightlightsExist = false;
         foreach(PieceHighlight child in highlights)
         {
             child.Destroy();

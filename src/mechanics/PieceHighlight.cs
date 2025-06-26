@@ -59,22 +59,30 @@ public partial class PieceHighlight : Button
     }
 
     public void HandlePressed()
-    {   
+    {
+        if(!_ready)
+            return;
         _spr.Frame = 2;
-        if(_ready && !_disabled)
+        if(!_disabled)
             EmitSignal(SignalName.SubmitMove,_gridPosition);
     }
     
     public void HandleButtonDown()
     {
+        if(!_ready)
+            return;
         _spr.Frame = 2;
     }
     public void HandleMouseEnter()
-    {  
+    {
+        if(!_ready)
+            return;
         _spr.Frame = 1;
     }
     public void HandleMouseExited()
     {
+        if(!_ready)
+            return;
         _spr.Frame = 0;
     }
 

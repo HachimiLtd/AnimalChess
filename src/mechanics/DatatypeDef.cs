@@ -12,16 +12,16 @@ public struct ChessPieceInitialArrangement
 
 public enum PieceType
 {
-    EMPTY,
+    EMPTY = 0,
     UNKNOWN,
-    RAT,
-    CAT,
-    DOG,
-    WOLF,
-    LEOPARD,
-    TIGER,
-    LION,
-    ELEPHANT,
+    RAT = 32,
+    CAT = 33,
+    DOG = 34,
+    WOLF = 35,
+    LEOPARD = 36,
+    TIGER = 37,
+    LION = 38,
+    ELEPHANT = 39,
 }
 
 public enum GroundType

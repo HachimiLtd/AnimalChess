@@ -1,9 +1,9 @@
 shader_type canvas_item;
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
-uniform int light_status[4096];
-const int board_height = 12;
-const int board_width = 12;
+uniform int light_status[1024];
+uniform int board_height = 12;
+uniform int board_width = 12;
 
 void fragment() {
 	//board_height = 12;

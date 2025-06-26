@@ -4,6 +4,9 @@ using Godot;
 
 public abstract partial class PieceInstance : Button
 {
+    [Signal]
+    public delegate void ReachNestEventHandler(PieceInstance instance);
+    
     protected static PackedScene _resPieceHighlight = (PackedScene)GD.Load("res://scenes/piece_highlight.tscn");
 
     protected ChessSystem _system;

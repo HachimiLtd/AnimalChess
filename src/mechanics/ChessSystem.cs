@@ -42,6 +42,17 @@ public partial class ChessSystem : Node2D
 
     public bool HightlightsExist = false;
 
+    ChessSystem()
+    {
+        _pieceLayer = new PieceInstance[24][];
+        _groundLayer = new GroundType[24][];
+        for(int i=0;i<24;i++)
+        {
+            _pieceLayer[i] = new PieceInstance[24];
+            _groundLayer[i] = new GroundType[24];
+        }
+    }
+
     public override void _EnterTree()
     {
         base._EnterTree();

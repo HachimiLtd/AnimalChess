@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://g52c0sbqunts"]
+[gd_scene load_steps=2 format=3 uid="uid://ca17xe3yttn2g"]
 
 [ext_resource type="Script" uid="uid://78jf5i7xejtq" path="res://src/scenes/Lobby.cs" id="1_o1atq"]
 
 [node name="Lobby" type="Control"]
+texture_filter = 1
+texture_repeat = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

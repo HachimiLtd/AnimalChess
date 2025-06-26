@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AnimalChess"
-run/main_scene="uid://g52c0sbqunts"
+run/main_scene="uid://ca17xe3yttn2g"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=800
 window/size/viewport_height=600
+window/size/window_width_override=1600
+window/size/window_height_override=1200
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [dotnet]
 

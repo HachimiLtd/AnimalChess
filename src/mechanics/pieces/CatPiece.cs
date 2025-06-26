@@ -18,7 +18,17 @@ public partial class CatPiece : PieceInstance
         {
             case GroundType.BOUNDARY:
                 return;
-            
+            default:
+                if(_system.PieceLayer[x][y]!=null)
+                {
+                    PieceInstance instance = _system.PieceLayer[x][y];
+                    if(instance.Player == _player)
+                        return;
+                    if(instance.Type > _type)
+                        return;
+                }
+                CreateHighlight(dest);
+                return;
         }
     }
 

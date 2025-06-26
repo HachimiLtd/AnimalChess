@@ -141,6 +141,7 @@ public partial class ChessSystem : Node2D
             }
 
         HighlightOwner = null;
+        _fog.UpdateFogData();
         _fog.UpdateFog();
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
@@ -186,17 +187,25 @@ public partial class ChessSystem : Node2D
 
         if (_pieceLayer[to.X][to.Y] != null)
         {
+            if(_pieceLayer[to.X][to.Y]==HighlightOwner)
+                HighlightOwner = null;
             _pieceLayer[to.X][to.Y].Destroy();
         }
-        instance.GridPosition = to;
         _pieceLayer[from.X][from.Y] = null;
         _pieceLayer[to.X][to.Y] = instance;
+        _fog.UpdateFogData();
+
+        instance.GridPosition = to;
 
 
         Tween tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(() => { _fog.UpdateFog(); })).SetDelay(ACGlobal.ANIMATION_TIME_1 / 2.0);
 
         Rpc(nameof(HandleOperation), from, to);
+    }
+    public bool CheckVisibility(Vector2I pos)
+    {
+        return _fog.CheckVisibility(pos);
     }
 
     /*

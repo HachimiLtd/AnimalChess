@@ -4,6 +4,7 @@
 
 [node name="PieceInstance" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(48, 48)
 offset_right = 48.0
 offset_bottom = 48.0
 

@@ -13,7 +13,7 @@ void fragment() {
 	//COLOR.rgb *= 1.5;
 	int x = int(UV.x*float(board_width));
 	int y = int(UV.y*float(board_height));
-	float ratio = 0.2;
+	float ratio = 0.18;
 	int index = x+y*board_width;
 	if(light_status[index]==1)
 		ratio = 1.;

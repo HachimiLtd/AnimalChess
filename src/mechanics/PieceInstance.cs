@@ -25,7 +25,17 @@ public abstract partial class PieceInstance : Button
         set
         {
             if(IsNodeReady())
-                Move(value);
+            {
+                if(_system.CheckVisibility(value))
+                {
+                    if(Visible)
+                        Move(value);
+                    else
+                        MoveInSecretly(value);
+                }
+                else
+                    MoveOutSecretly(value);
+            }
             else
                 Position = GridSystem.GridToWorld(value);
             _gridPosition = value;
@@ -98,6 +108,28 @@ public abstract partial class PieceInstance : Button
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(this, "position", toPos, ACGlobal.ANIMATION_TIME_1);
         tween.TweenCallback(Callable.From(UpdateDisplay));
+        _gridPosition = to;
+    }
+    public void MoveOutSecretly(Vector2I to)
+    {
+        Vector2 toPos = GridSystem.GridToWorld(to);
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,0.0f), ACGlobal.ANIMATION_TIME_1/2);
+        tween.TweenCallback(Callable.From(()=>
+            {
+                Position = toPos;
+                Modulate = new Color(1.0f,1.0f,1.0f);
+            })).SetDelay(ACGlobal.ANIMATION_TIME_1/1.95);
+        _gridPosition = to;
+    }
+    public void MoveInSecretly(Vector2I to)
+    {
+        Vector2 toPos = GridSystem.GridToWorld(to);
+        Position = toPos;
+        Modulate = new Color(1.0f,1.0f,1.0f,0.0f);
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,1.0f),
+            ACGlobal.ANIMATION_TIME_1/2).SetDelay(ACGlobal.ANIMATION_TIME_1/2);
         _gridPosition = to;
     }
     public void Destroy()

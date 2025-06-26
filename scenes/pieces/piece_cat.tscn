@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c88qn5udpfd87"]
+[gd_scene load_steps=3 format=3 uid="uid://c88qn5udpfd87"]
 
 [ext_resource type="PackedScene" uid="uid://c4b1l5kn6nlrh" path="res://scenes/piece_instance.tscn" id="1_hgcsf"]
+[ext_resource type="Script" uid="uid://iwdcb4o33ta3" path="res://src/mechanics/pieces/CatPiece.cs" id="2_1omlb"]
 
 [node name="PieceInstance" instance=ExtResource("1_hgcsf")]
+script = ExtResource("2_1omlb")
 
 [node name="Label" parent="." index="0"]
 text = "CAT"

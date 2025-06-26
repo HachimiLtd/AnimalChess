@@ -19,7 +19,7 @@ public partial class MultiplayerManager : Node
   [Signal]
   public delegate void GameDataReceivedEventHandler(Vector2I from, Vector2I to, long fromId);
 
-  private const int DEFAULT_PORT = 8793;
+  private const int DEFAULT_PORT = 7000;
   private const int MAX_CLIENTS = 10; // For chess, typically 2 players
 
   private ENetMultiplayerPeer _peer;

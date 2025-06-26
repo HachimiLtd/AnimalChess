@@ -73,7 +73,9 @@ turbulence_noise_speed = Vector3(0.2, 0.2, 0.2)
 script = ExtResource("1_um1n8")
 
 [node name="View" type="Camera2D" parent="."]
+visible = false
 anchor_mode = 0
+enabled = false
 
 [node name="ChessBoard" type="TileMapLayer" parent="."]
 z_index = -1
@@ -90,6 +92,7 @@ modulate = Color(1, 1, 1, 0.886275)
 z_index = 2
 
 [node name="FogPanel" type="Panel" parent="."]
+visible = false
 clip_children = 2
 material = SubResource("ShaderMaterial_74bcr")
 offset_right = 576.0

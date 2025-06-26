@@ -59,6 +59,41 @@ public partial class ChessSystem : Node2D
         MountHightlights = (Node2D)GetNode("MountHightlights");
         MountPieces = (Node2D)GetNode("MountPieces");
         _chessBoard = (ChessBoard)GetNode("ChessBoard");
+
+        
+        ChessPieceInitialArrangement arr = new ChessPieceInitialArrangement();
+        arr.typeMap =
+        [
+            [PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+        ];
+        arr.roleMap =
+        [
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+        ];
+
+        GameInit(arr, RoleType.P1);
     }
 
     public void GameInit(ChessPieceInitialArrangement pieceArrangement,RoleType player)

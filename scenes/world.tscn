@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://cryw7lnad8322"]
+[gd_scene load_steps=3 format=3 uid="uid://cryw7lnad8322"]
+
+[ext_resource type="Script" uid="uid://brrrg4x560gaq" path="res://src/scenes/World.cs" id="1_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://b4ck7qv1yal3h" path="res://scenes/chess_system.tscn" id="2_4wyf3"]
 
 [node name="world" type="Node2D"]
+script = ExtResource("1_rwgxs")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -9,3 +13,14 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(576, 576)
+offset_right = 576.0
+offset_bottom = 576.0
+
+[node name="Control" type="Control" parent="CenterContainer"]
+custom_minimum_size = Vector2(576, 576)
+layout_mode = 2
+
+[node name="ChessSystem" parent="CenterContainer/Control" instance=ExtResource("2_4wyf3")]

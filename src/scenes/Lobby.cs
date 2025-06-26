@@ -71,7 +71,7 @@ public partial class Lobby : Control
   {
     GD.Print("Successfully connected to host!");
     // Switch to game scene
-    GetTree().ChangeSceneToFile("res://scenes/chess_system.tscn");
+    GetTree().ChangeSceneToFile("res://scenes/world.tscn");
   }
 
   private void OnConnectionFailed()
@@ -88,7 +88,7 @@ public partial class Lobby : Control
     if (_multiplayer.IsHost && _multiplayer.GetPlayerCount() >= 2)
     {
       GD.Print("Game is ready to start!");
-      GetTree().ChangeSceneToFile("res://scenes/chess_system.tscn");
+      GetTree().ChangeSceneToFile("res://scenes/world.tscn");
     }
   }
 

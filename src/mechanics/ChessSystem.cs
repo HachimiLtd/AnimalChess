@@ -34,6 +34,7 @@ public partial class ChessSystem : Node2D
     public PieceInstance[][] PieceLayer { get { return _pieceLayer; } set { _pieceLayer = value; } }
 
     private ChessBoard _chessBoard;
+    private FogControl _fog;
     public Node2D MountHightlights;
     public Node2D MountPieces;
 
@@ -53,12 +54,13 @@ public partial class ChessSystem : Node2D
         }
     }
 
-    public override void _EnterTree()
+    public override void _Ready()
     {
-        base._EnterTree();
+        base._Ready();
         MountHightlights = (Node2D)GetNode("MountHightlights");
         MountPieces = (Node2D)GetNode("MountPieces");
         _chessBoard = (ChessBoard)GetNode("ChessBoard");
+        _fog = (FogControl)GetNode("FogPanel");
 
 
         ChessPieceInitialArrangement arr = new ChessPieceInitialArrangement();
@@ -106,7 +108,7 @@ public partial class ChessSystem : Node2D
 
         _chessBoard.LoadLayers(this);
         for (int i = 0; i < _groundSize.X; i++)
-            for (int j = 0; j < _groundSize.Y; i++)
+            for (int j = 0; j < _groundSize.Y; j++)
             {
                 if (pieceArrangement.typeMap[i][j] == PieceType.EMPTY)
                     continue;
@@ -115,6 +117,7 @@ public partial class ChessSystem : Node2D
 
         PlayerRole = player;
         HightlightsExist = false;
+        _fog.UpdateFog();
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
     {
@@ -164,6 +167,10 @@ public partial class ChessSystem : Node2D
         _pieceLayer[from.X][from.Y] = null;
         _pieceLayer[to.X][to.Y] = instance;
         HightlightsExist = false;
+
+        Tween tween = GetTree().CreateTween();
+        tween.TweenCallback(Callable.From(()=>{_fog.UpdateFog();})).SetDelay(ACGlobal.ANIMATION_TIME_1/2.0);
+
         Rpc(nameof(HandleOperation), from, to);
     }
 

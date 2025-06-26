@@ -56,7 +56,7 @@ emission_shape_offset = Vector3(288, 288, 0)
 emission_shape = 3
 emission_box_extents = Vector3(288, 288, 1)
 spread = 180.0
-initial_velocity_min = 1.2
+initial_velocity_min = 0.3
 initial_velocity_max = 3.0
 gravity = Vector3(0, 0, 0)
 scale_min = 1.5
@@ -91,14 +91,15 @@ script = ExtResource("2_oabma")
 modulate = Color(1, 1, 1, 0.886275)
 z_index = 2
 
-[node name="FogPanel" type="Panel" parent="."]
-visible = false
+[node name="FogPanel" type="Panel" parent="." node_paths=PackedStringArray("_system")]
 clip_children = 2
 material = SubResource("ShaderMaterial_74bcr")
 offset_right = 576.0
 offset_bottom = 576.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_74bcr")
 script = ExtResource("5_4jcte")
+_system = NodePath("..")
 
 [node name="Particles" type="GPUParticles2D" parent="FogPanel"]
 material = SubResource("CanvasItemMaterial_74bcr")

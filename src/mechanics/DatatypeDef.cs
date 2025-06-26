@@ -40,3 +40,7 @@ public enum RoleType
     P1,
     P2,
 }
+
+public static class ACGlobal{
+    public const float ANIMATION_TIME_1 = 0.15f;
+}

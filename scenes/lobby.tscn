@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca17xe3yttn2g"]
+[gd_scene load_steps=3 format=3 uid="uid://ca17xe3yttn2g"]
 
+[ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="1_5gu6x"]
 [ext_resource type="Script" uid="uid://78jf5i7xejtq" path="res://src/scenes/Lobby.cs" id="1_o1atq"]
 
 [node name="Lobby" type="Control"]
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_5gu6x")
 script = ExtResource("1_o1atq")
 
 [node name="Panel" type="Panel" parent="."]
@@ -25,6 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="JoinButton" type="Button" parent="Panel"]
+texture_filter = 1
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 1
 anchors_preset = -1

@@ -97,7 +97,7 @@ public abstract partial class PieceInstance : Button
     {
         Vector2 toPos = GridSystem.GridToWorld(to);
         Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "position", toPos, 0.2f);
+        tween.TweenProperty(this, "position", toPos, ACGlobal.ANIMATION_TIME_1);
         tween.TweenCallback(Callable.From(UpdateDisplay));
         _gridPosition = to;
     }
@@ -105,7 +105,7 @@ public abstract partial class PieceInstance : Button
     {
         ClearHighlights();
         Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this,"modulate", new Color(1.0f,1.0f,1.0f,0.0f),0.1f);
+        tween.TweenProperty(this,"modulate", new Color(1.0f,1.0f,1.0f,0.0f),ACGlobal.ANIMATION_TIME_1/1.5f);
         tween.TweenCallback(Callable.From(QueueFree));
     }
 

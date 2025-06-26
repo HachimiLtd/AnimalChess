@@ -67,33 +67,33 @@ public partial class ChessSystem : Node2D
         ChessPieceInitialArrangement arr = new ChessPieceInitialArrangement();
         arr.typeMap =
         [
-            [PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.CAT, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
+            [PieceType.EMPTY, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
             [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
         ];
         arr.roleMap =
         [
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P2, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
             [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
+            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
         ];
 
         GameInit(arr, RoleType.P1);
@@ -110,6 +110,7 @@ public partial class ChessSystem : Node2D
             child.QueueFree();
 
         _chessBoard.LoadLayers(this);
+        PlayerRole = player;
         for (int i = 0; i < _groundSize.X; i++)
             for (int j = 0; j < _groundSize.Y; j++)
             {
@@ -118,7 +119,6 @@ public partial class ChessSystem : Node2D
                 CreatePieceInstance(new Vector2I(i + 1, j + 1), pieceArrangement.roleMap[i][j], pieceArrangement.typeMap[i][j]);
             }
 
-        PlayerRole = player;
         HighlightOwner = null;
         _fog.UpdateFog();
     }

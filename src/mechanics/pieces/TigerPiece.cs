@@ -1,9 +1,9 @@
 using System;
 using Godot;
 
-public partial class CatPiece : PieceInstance
+public partial class TigerPiece : PieceInstance
 {
-    public CatPiece() : base(PieceType.CAT) { }
+    public TigerPiece() : base(PieceType.TIGER) { }
 
     public override void CreateHighLights()
     {

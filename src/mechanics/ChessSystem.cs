@@ -15,13 +15,24 @@ public enum MoveValidation
 
 public partial class ChessSystem : Node2D
 {
+    // Constants for board dimensions
+    private const int BOARD_WIDTH = 12;
+    private const int BOARD_HEIGHT = 12;
+
     //private static PackedScene _resPieceInstance = (PackedScene)GD.Load("res://scenes/piece_instance.tscn");
     private static Dictionary<PieceType, PackedScene> _resPieceInstances;
     static ChessSystem()
     {
         _resPieceInstances = new Dictionary<PieceType, PackedScene>
         {
-            [PieceType.CAT] = (PackedScene)GD.Load("res://scenes/pieces/piece_cat.tscn")
+            [PieceType.RAT] = (PackedScene)GD.Load("res://scenes/pieces/piece_rat.tscn"),
+            [PieceType.CAT] = (PackedScene)GD.Load("res://scenes/pieces/piece_cat.tscn"),
+            [PieceType.DOG] = (PackedScene)GD.Load("res://scenes/pieces/piece_dog.tscn"),
+            [PieceType.WOLF] = (PackedScene)GD.Load("res://scenes/pieces/piece_wolf.tscn"),
+            [PieceType.LEOPARD] = (PackedScene)GD.Load("res://scenes/pieces/piece_leopard.tscn"),
+            [PieceType.TIGER] = (PackedScene)GD.Load("res://scenes/pieces/piece_tiger.tscn"),
+            [PieceType.LION] = (PackedScene)GD.Load("res://scenes/pieces/piece_lion.tscn"),
+            [PieceType.ELEPHANT] = (PackedScene)GD.Load("res://scenes/pieces/piece_elephant.tscn")
         };
     }
 
@@ -64,39 +75,49 @@ public partial class ChessSystem : Node2D
         _fog = (FogControl)GetNode("FogPanel");
 
 
-        ChessPieceInitialArrangement arr = new ChessPieceInitialArrangement();
-        arr.typeMap =
-        [
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.CAT, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-            [PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY, PieceType.EMPTY,],
-        ];
-        arr.roleMap =
-        [
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1, RoleType.P1,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-            [RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2, RoleType.P2,],
-        ];
+        ChessPieceInitialArrangement arr = CreateInitialArrangement();
+        RoleType role = IsMultiplayerAuthority() ? RoleType.P1 : RoleType.P2;
+        GD.Print(role);
 
-        GameInit(arr, RoleType.P1);
+        GameInit(arr, role);
+    }
+
+    private ChessPieceInitialArrangement CreateInitialArrangement()
+    {
+        var arrangement = new ChessPieceInitialArrangement();
+
+        arrangement.typeMap = new PieceType[BOARD_HEIGHT][];
+        for (int i = 0; i < BOARD_HEIGHT; i++)
+        {
+            arrangement.typeMap[i] = new PieceType[BOARD_WIDTH];
+            for (int j = 0; j < BOARD_WIDTH; j++)
+            {
+                arrangement.typeMap[i][j] = PieceType.EMPTY;
+            }
+        }
+
+        arrangement.roleMap = new RoleType[BOARD_HEIGHT][];
+        for (int i = 0; i < BOARD_HEIGHT; i++)
+        {
+            arrangement.roleMap[i] = new RoleType[BOARD_WIDTH];
+            for (int j = 0; j < BOARD_WIDTH; j++)
+            {
+                arrangement.roleMap[i][j] = i >= 6 ? RoleType.P2 : RoleType.P1;
+            }
+        }
+
+        arrangement.typeMap[0][0] = PieceType.CAT;
+        arrangement.typeMap[4][0] = PieceType.DOG;
+        arrangement.typeMap[2][3] = PieceType.CAT;
+        arrangement.typeMap[6][2] = PieceType.CAT;
+        arrangement.typeMap[1][1] = PieceType.WOLF;
+        arrangement.typeMap[8][4] = PieceType.LEOPARD;
+        arrangement.typeMap[0][1] = PieceType.RAT;
+        arrangement.typeMap[3][1] = PieceType.TIGER;
+        arrangement.typeMap[7][3] = PieceType.LION;
+        arrangement.typeMap[9][5] = PieceType.ELEPHANT;
+
+        return arrangement;
     }
 
     public void GameInit(ChessPieceInitialArrangement pieceArrangement, RoleType player)
@@ -106,7 +127,7 @@ public partial class ChessSystem : Node2D
             {
                 DestroyPieceInstance(new Vector2I(i, j));
             }
-        foreach(var child in MountHightlights.GetChildren())
+        foreach (var child in MountHightlights.GetChildren())
             child.QueueFree();
 
         _chessBoard.LoadLayers(this);
@@ -167,10 +188,10 @@ public partial class ChessSystem : Node2D
         instance.GridPosition = to;
         _pieceLayer[from.X][from.Y] = null;
         _pieceLayer[to.X][to.Y] = instance;
-        
+
 
         Tween tween = GetTree().CreateTween();
-        tween.TweenCallback(Callable.From(()=>{_fog.UpdateFog();})).SetDelay(ACGlobal.ANIMATION_TIME_1/2.0);
+        tween.TweenCallback(Callable.From(() => { _fog.UpdateFog(); })).SetDelay(ACGlobal.ANIMATION_TIME_1 / 2.0);
 
         Rpc(nameof(HandleOperation), from, to);
     }
@@ -185,7 +206,7 @@ public partial class ChessSystem : Node2D
         if (inst == null || inst.Player != PlayerRole)
             return;
 
-        if (HighlightOwner==null)
+        if (HighlightOwner == null)
             inst.CreateHighLights();
         else
         {

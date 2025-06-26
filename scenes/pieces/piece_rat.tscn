@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq8n7r3nakx5p"]
+
+[ext_resource type="PackedScene" uid="uid://c4b1l5kn6nlrh" path="res://scenes/piece_instance.tscn" id="1_hgcsf"]
+[ext_resource type="Script" path="res://src/mechanics/pieces/RatPiece.cs" id="2_1omlb"]
+
+[node name="PieceInstance" instance=ExtResource("1_hgcsf")]
+script = ExtResource("2_1omlb")
+
+[node name="Label" parent="." index="0"]
+text = "RAT"

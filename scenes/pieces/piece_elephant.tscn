@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8m5k6p2q4rxw"]
+
+[ext_resource type="PackedScene" uid="uid://c4b1l5kn6nlrh" path="res://scenes/piece_instance.tscn" id="1_hgcsf"]
+[ext_resource type="Script" uid="uid://e6b401v21v45" path="res://src/mechanics/pieces/ElephantPiece.cs" id="2_1omlb"]
+
+[node name="PieceInstance" instance=ExtResource("1_hgcsf")]
+script = ExtResource("2_1omlb")
+
+[node name="Label" parent="." index="0"]
+text = "ELEP
+HANT"

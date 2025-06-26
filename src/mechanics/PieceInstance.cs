@@ -108,8 +108,9 @@ public abstract partial class PieceInstance : Button
         tween.TweenCallback(Callable.From(QueueFree));
     }
 
-    public PieceInstance()
+    public PieceInstance(PieceType type)
     {
+        _type = type;
         highlights = new List<PieceHighlight>();
     }
 }

@@ -19,8 +19,8 @@ public partial class PieceHighlight : Button
     {
         Pressed += HandlePressed;
         ButtonDown += HandleButtonDown;
-        FocusExited += HandleFocusExited;
-        FocusEntered += HandleFocusEnter;
+        MouseExited += HandleMouseExited;
+        MouseEntered += HandleMouseEnter;
     }
     public void Initialize(Vector2I pos,Vector2I dest)
     {
@@ -28,11 +28,23 @@ public partial class PieceHighlight : Button
         _gridPosition = dest;
         _dest = GridSystem.GridToWorld(dest);
         _totalDist = (Position-_dest).Length();
+        Disabled = false;
+
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(this,"position",_dest,0.05);
+        tween.TweenCallback(Callable.From(TweenSetReady)).SetDelay(0.05);
+    }
+    public void TweenSetReady()
+    {
+        _ready = true;
     }
 
     public void Destroy()
     {
         _disabled = true;
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(this,"modulate",new Color(1.0f,1.0f,1.0f,0.0f),0.1);
+        tween.TweenCallback(Callable.From(QueueFree)).SetDelay(0.1);
     }
 
     public override void _Ready()
@@ -44,21 +56,6 @@ public partial class PieceHighlight : Button
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        if(_ready)
-            return;
-        
-        _timepassed += delta*60.0;
-        if(_timepassed > 5.998 || _totalDist < 2.0)
-        {
-            Position = _dest;
-            _ready = true;
-            return;
-        }
-        
-        double ratio = Math.Pow(0.1,delta/6.0);
-        Position = Position.MoveToward(_dest,(float)(_totalDist*(1-ratio)));
-        _totalDist *= ratio;
     }
 
     public void HandlePressed()
@@ -72,11 +69,11 @@ public partial class PieceHighlight : Button
     {
         _spr.Frame = 2;
     }
-    public void HandleFocusEnter()
+    public void HandleMouseEnter()
     {  
         _spr.Frame = 1;
     }
-    public void HandleFocusExited()
+    public void HandleMouseExited()
     {
         _spr.Frame = 0;
     }

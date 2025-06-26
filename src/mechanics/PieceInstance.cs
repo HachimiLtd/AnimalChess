@@ -6,7 +6,7 @@ public abstract partial class PieceInstance : Button
 {
     [Signal]
     public delegate void ReachNestEventHandler(PieceInstance instance);
-    
+
     protected static PackedScene _resPieceHighlight = (PackedScene)GD.Load("res://scenes/piece_highlight.tscn");
 
     protected ChessSystem _system;
@@ -14,6 +14,8 @@ public abstract partial class PieceInstance : Button
     protected readonly PieceType _type; //THIS MUST GET A VALUE IN THE CONSTRUCTOR
     protected RoleType _player;
     protected Vector2I _gridPosition;
+
+    protected List<PieceHighlight> highlights;
 
     public RoleType Player{ get{return _player;} set{_player=value;} }
     public PieceType Type{ get{return _type;} }
@@ -49,6 +51,7 @@ public abstract partial class PieceInstance : Button
         _system.HightlightsExist = true;
         PieceHighlight highlight = (PieceHighlight)_resPieceHighlight.Instantiate();
 
+        highlights.Add(highlight);
         _system.MountHightlights.AddChild(highlight);
         highlight.Initialize(_gridPosition,at);
         highlight.SubmitMove += HandleSubmitMove;
@@ -57,11 +60,11 @@ public abstract partial class PieceInstance : Button
     public void ClearHighlights()
     {
         _system.HightlightsExist = false;
-        foreach(Node child in GetChildren())
+        foreach(PieceHighlight child in highlights)
         {
-            if(child is PieceHighlight)
-                ((PieceHighlight)child).Destroy();
+            child.Destroy();
         }
+        highlights.Clear();
     }
 
 
@@ -104,5 +107,10 @@ public abstract partial class PieceInstance : Button
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(this,"modulate", new Color(1.0f,1.0f,1.0f,0.0f),0.1f);
         tween.TweenCallback(Callable.From(QueueFree));
+    }
+
+    public PieceInstance()
+    {
+        highlights = new List<PieceHighlight>();
     }
 }

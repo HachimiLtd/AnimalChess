@@ -9,11 +9,12 @@ public partial class ChessBoard : TileMapLayer
         _groundSize = new Vector2I(12,12);
         system.GroundSize = _groundSize;
 
-        PieceInstance[][] pieceLayer = system.PieceLayer;
-        GroundType[][] groundLayer = system.GroundLayer;
+        PieceInstance[][] pieceLayer = new PieceInstance[_groundSize.X+2][];
+        GroundType[][] groundLayer = new GroundType[_groundSize.X+2][];
 
-        groundLayer = new GroundType[_groundSize.X+2][];
-        pieceLayer = new PieceInstance[_groundSize.X+2][];
+        system.PieceLayer = pieceLayer;
+        system.GroundLayer = groundLayer;
+        
         for( int i=0; i<_groundSize.X+2; i++ )
         {
             groundLayer[i] = new GroundType[_groundSize.Y+2];
@@ -24,7 +25,7 @@ public partial class ChessBoard : TileMapLayer
             groundLayer[i][0] = GroundType.BOUNDARY;
             groundLayer[i][_groundSize.Y+1] = GroundType.BOUNDARY;
         }
-        for( int i=1; i<_groundSize.Y+1; i++ )
+        for( int i=0; i<_groundSize.Y+2; i++ )
         {
             groundLayer[0][i] = GroundType.BOUNDARY;
             groundLayer[_groundSize.X+1][i] = GroundType.BOUNDARY;

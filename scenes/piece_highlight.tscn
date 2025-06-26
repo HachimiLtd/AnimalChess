@@ -4,11 +4,14 @@
 [ext_resource type="Script" uid="uid://cpkbbk2xtuuxg" path="res://src/mechanics/PieceHighlight.cs" id="2_0jly3"]
 
 [node name="PieceHighlight" type="Button"]
-modulate = Color(1, 1, 1, 0.752941)
 self_modulate = Color(1, 1, 1, 0)
 texture_filter = 1
+offset_right = 48.0
+offset_bottom = 48.0
 script = ExtResource("2_0jly3")
 
 [node name="Spr" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.658824)
 texture = ExtResource("1_jja60")
+centered = false
 hframes = 3

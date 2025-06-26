@@ -30,8 +30,8 @@ public partial class ChessSystem : Node2D
     private PieceInstance[][] _pieceLayer;
     //private List<PieceInstance> _pieceInstanceList;
     public Vector2I GroundSize{get{return _groundSize;} set{_groundSize=value;}}
-    public GroundType[][] GroundLayer{get{return _groundLayer;}}
-    public PieceInstance[][] PieceLayer{get{return _pieceLayer;}}
+    public GroundType[][] GroundLayer{get{return _groundLayer;}set{_groundLayer=value;}}
+    public PieceInstance[][] PieceLayer{get{return _pieceLayer;}set{_pieceLayer=value;}}
 
     private ChessBoard _chessBoard;
     public Node2D MountHightlights;

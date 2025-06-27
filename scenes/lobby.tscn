@@ -16,7 +16,7 @@ theme = ExtResource("1_5gu6x")
 script = ExtResource("1_o1atq")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(200, 300)
+custom_minimum_size = Vector2(400, 300)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,32 +26,61 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="JoinButton" type="Button" parent="Panel"]
+[node name="IPInput" type="LineEdit" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.25
+offset_left = -130.0
+offset_right = 130.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme = ExtResource("1_5gu6x")
+text = "127.0.0.1"
+alignment = 2
+
+[node name="Label" type="Label" parent="Panel/IPInput"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 40.0
+theme = ExtResource("1_5gu6x")
+theme_override_colors/font_color = Color(0.427493, 0.427493, 0.427493, 1)
+text = "IP Addr."
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Panel"]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HostButton" type="Button" parent="Panel/Control"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.5
+anchor_right = 0.3
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "HOST"
+
+[node name="JoinButton" type="Button" parent="Panel/Control"]
 texture_filter = 1
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.2
-anchor_right = 0.5
-anchor_bottom = 0.2
-offset_left = -4.0
-offset_right = 4.0
-offset_bottom = 8.0
-grow_horizontal = 2
-text = "JOIN"
-
-[node name="HostButton" type="Button" parent="Panel"]
-custom_minimum_size = Vector2(100, 36)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.8
-anchor_right = 0.5
-anchor_bottom = 0.8
-offset_left = -4.0
-offset_right = 4.0
-offset_bottom = 8.0
+anchor_left = 0.7
+anchor_top = 0.5
+anchor_right = 0.7
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 0
-text = "HOST"
+text = "JOIN"

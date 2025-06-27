@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ck2x8m4n7v1aw"]
 
 [ext_resource type="PackedScene" uid="uid://c4b1l5kn6nlrh" path="res://scenes/piece_instance.tscn" id="1_hgcsf"]
-[ext_resource type="Script" path="res://src/mechanics/pieces/TigerPiece.cs" id="2_1omlb"]
+[ext_resource type="Script" uid="uid://coar3x8m6k2vp" path="res://src/mechanics/pieces/TigerPiece.cs" id="2_1omlb"]
 
 [node name="PieceInstance" instance=ExtResource("1_hgcsf")]
 script = ExtResource("2_1omlb")

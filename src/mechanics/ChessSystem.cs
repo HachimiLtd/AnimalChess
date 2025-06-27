@@ -116,16 +116,27 @@ public partial class ChessSystem : Node2D
             }
         }
 
-        arrangement.typeMap[0][0] = PieceType.CAT;
-        arrangement.typeMap[4][0] = PieceType.DOG;
-        arrangement.typeMap[2][3] = PieceType.CAT;
-        arrangement.typeMap[6][2] = PieceType.CAT;
-        arrangement.typeMap[1][1] = PieceType.WOLF;
-        arrangement.typeMap[8][4] = PieceType.LEOPARD;
-        arrangement.typeMap[0][1] = PieceType.RAT;
-        arrangement.typeMap[3][1] = PieceType.TIGER;
-        arrangement.typeMap[7][3] = PieceType.LION;
-        arrangement.typeMap[9][5] = PieceType.ELEPHANT;
+        arrangement.typeMap[0][0] = PieceType.WOLF;
+        arrangement.typeMap[2][0] = PieceType.LION;
+        arrangement.typeMap[1][1] = PieceType.DOG;
+        arrangement.typeMap[2][2] = PieceType.RAT;
+        arrangement.typeMap[2][4] = PieceType.LEOPARD;
+        arrangement.typeMap[2][7] = PieceType.CAT;
+        arrangement.typeMap[2][9] = PieceType.ELEPHANT;
+        arrangement.typeMap[1][10] = PieceType.DOG;
+        arrangement.typeMap[0][11] = PieceType.WOLF;
+        arrangement.typeMap[2][11] = PieceType.TIGER;
+        // and the corresponding ones on the other side
+        arrangement.typeMap[11][11] = PieceType.WOLF;
+        arrangement.typeMap[9][11] = PieceType.LION;
+        arrangement.typeMap[10][10] = PieceType.DOG;
+        arrangement.typeMap[9][9] = PieceType.RAT;
+        arrangement.typeMap[9][7] = PieceType.LEOPARD;
+        arrangement.typeMap[9][4] = PieceType.CAT;
+        arrangement.typeMap[9][2] = PieceType.ELEPHANT;
+        arrangement.typeMap[10][1] = PieceType.DOG;
+        arrangement.typeMap[11][0] = PieceType.WOLF;
+        arrangement.typeMap[9][0] = PieceType.TIGER;
 
         return arrangement;
     }

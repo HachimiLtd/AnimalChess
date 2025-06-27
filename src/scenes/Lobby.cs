@@ -3,6 +3,9 @@ using Godot;
 public partial class Lobby : Control
 {
   private MultiplayerManager _multiplayer;
+  private Button _joinBtn;
+  private Button _hostBtn;
+  private LineEdit _ipInput;
 
   public override void _Ready()
   {
@@ -16,6 +19,9 @@ public partial class Lobby : Control
     {
       _multiplayer = GetNode<MultiplayerManager>("/root/MultiplayerManager");
     }
+    _joinBtn = GetNode<Button>("Panel/Control/JoinButton");
+    _hostBtn = GetNode<Button>("Panel/Control/HostButton");
+    _ipInput = GetNode<LineEdit>("Panel/IPInput");
 
     // Connect multiplayer signals
     _multiplayer.ConnectionSuccessful += OnConnectionSuccessful;
@@ -23,11 +29,8 @@ public partial class Lobby : Control
     _multiplayer.PlayerConnected += OnPlayerConnected;
     _multiplayer.PlayerDisconnected += OnPlayerDisconnected;
 
-    Button joinBtn = GetNode<Button>("Panel/JoinButton");
-    joinBtn.ButtonDown += OnJoinButtonPressed;
-
-    Button hostBtn = GetNode<Button>("Panel/HostButton");
-    hostBtn.ButtonDown += OnHostButtonPressed;
+    _joinBtn.ButtonDown += OnJoinButtonPressed;
+    _hostBtn.ButtonDown += OnHostButtonPressed;
   }
 
   private void OnJoinButtonPressed()
@@ -35,7 +38,7 @@ public partial class Lobby : Control
     GD.Print("Join button pressed");
 
     // Join game on localhost with default port
-    string address = "127.0.0.1";
+    string address = _ipInput.Text;
     int port = 7000;
 
     if (_multiplayer.JoinGame(address, port))

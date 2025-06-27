@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class CatPiece : PieceInstance
@@ -19,6 +18,15 @@ public partial class CatPiece : PieceInstance
         switch (_system.GroundLayer[x][y])
         {
             case GroundType.BOUNDARY:
+                return;
+            case GroundType.TRAP:
+                if (_system.PieceLayer[x][y] != null)
+                {
+                    PieceInstance instance = _system.PieceLayer[x][y];
+                    if (instance.Player == _player)
+                        return;
+                }
+                CreateHighlight(dest);
                 return;
             default:
                 if (_system.PieceLayer[x][y] != null)

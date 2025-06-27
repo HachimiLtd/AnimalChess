@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class ElephantPiece : PieceInstance
@@ -20,13 +19,22 @@ public partial class ElephantPiece : PieceInstance
         {
             case GroundType.BOUNDARY:
                 return;
+            case GroundType.TRAP:
+                if (_system.PieceLayer[x][y] != null)
+                {
+                    PieceInstance instance = _system.PieceLayer[x][y];
+                    if (instance.Player == _player)
+                        return;
+                }
+                CreateHighlight(dest);
+                return;
             default:
                 if (_system.PieceLayer[x][y] != null)
                 {
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
-                    if (instance.Type > _type)
+                    if (instance.Type > _type || instance.Type == PieceType.RAT)
                         return;
                 }
                 CreateHighlight(dest);

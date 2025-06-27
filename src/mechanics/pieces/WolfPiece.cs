@@ -4,7 +4,7 @@ using Godot;
 public partial class WolfPiece : PieceInstance
 {
   public WolfPiece() : base(PieceType.WOLF) { }
-  public override void CreateHighLights()
+  public override void CreateHighlights()
   {
     CreateHighLightsPartial(_gridPosition + Vector2I.Down);
     CreateHighLightsPartial(_gridPosition + Vector2I.Up);

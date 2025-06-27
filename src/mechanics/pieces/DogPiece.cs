@@ -5,7 +5,7 @@ public partial class DogPiece : PieceInstance
 {
     public DogPiece() : base(PieceType.DOG) { }
 
-    public override void CreateHighLights()
+    public override void CreateHighlights()
     {
         CreateHighLightsPartial(_gridPosition + Vector2I.Down);
         CreateHighLightsPartial(_gridPosition + Vector2I.Up);

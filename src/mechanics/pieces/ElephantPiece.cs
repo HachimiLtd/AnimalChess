@@ -5,7 +5,7 @@ public partial class ElephantPiece : PieceInstance
 {
     public ElephantPiece() : base(PieceType.ELEPHANT) { }
 
-    public override void CreateHighLights()
+    public override void CreateHighlights()
     {
         CreateHighLightsPartial(_gridPosition + Vector2I.Down);
         CreateHighLightsPartial(_gridPosition + Vector2I.Up);

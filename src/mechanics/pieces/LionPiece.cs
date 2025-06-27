@@ -5,7 +5,7 @@ public partial class LionPiece : PieceInstance
 {
   public LionPiece() : base(PieceType.LION) { }
 
-  public override void CreateHighLights()
+  public override void CreateHighlights()
   {
     CreateHighLightsPartial(_gridPosition + Vector2I.Down);
     CreateHighLightsPartial(_gridPosition + Vector2I.Up);

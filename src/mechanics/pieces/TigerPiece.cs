@@ -5,7 +5,7 @@ public partial class TigerPiece : PieceInstance
 {
     public TigerPiece() : base(PieceType.TIGER) { }
 
-    public override void CreateHighLights()
+    public override void CreateHighlights()
     {
         CreateHighLightsPartial(_gridPosition + Vector2I.Down);
         CreateHighLightsPartial(_gridPosition + Vector2I.Up);

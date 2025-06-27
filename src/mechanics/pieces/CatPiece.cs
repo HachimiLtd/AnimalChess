@@ -5,7 +5,7 @@ public partial class CatPiece : PieceInstance
 {
     public CatPiece() : base(PieceType.CAT) { }
 
-    public override void CreateHighLights()
+    public override void CreateHighlights()
     {
         CreateHighLightsPartial(_gridPosition + Vector2I.Down);
         CreateHighLightsPartial(_gridPosition + Vector2I.Up);

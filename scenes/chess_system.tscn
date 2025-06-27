@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://b4ck7qv1yal3h"]
+[gd_scene load_steps=17 format=4 uid="uid://b4ck7qv1yal3h"]
 
 [ext_resource type="Script" uid="uid://bgs4m0shiwioa" path="res://src/mechanics/ChessSystem.cs" id="1_um1n8"]
 [ext_resource type="Script" uid="uid://1hd2qbdvj6qm" path="res://src/mechanics/ChessBoard.cs" id="2_oabma"]
 [ext_resource type="Texture2D" uid="uid://8wv8wl2xo5hy" path="res://assets/sprites/test_ground.png" id="2_yinh3"]
 [ext_resource type="Shader" uid="uid://jm675c0b55a6" path="res://src/rendering/fog.gdshader" id="4_74bcr"]
 [ext_resource type="Script" uid="uid://c8hn1l3nrxtfs" path="res://src/rendering/FogControl.cs" id="5_4jcte"]
+[ext_resource type="Script" uid="uid://v6xvn8w42p4s" path="res://src/mechanics/ChessProcessControl.cs" id="6_5pndn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74bcr"]
 texture = ExtResource("2_yinh3")
@@ -71,6 +72,10 @@ turbulence_noise_speed = Vector3(0.2, 0.2, 0.2)
 
 [node name="ChessSystem" type="Node2D"]
 script = ExtResource("1_um1n8")
+
+[node name="Controler" type="Node" parent="." node_paths=PackedStringArray("_system")]
+script = ExtResource("6_5pndn")
+_system = NodePath("..")
 
 [node name="View" type="Camera2D" parent="."]
 visible = false

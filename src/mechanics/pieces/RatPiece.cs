@@ -5,7 +5,7 @@ public partial class RatPiece : PieceInstance
 {
   public RatPiece() : base(PieceType.RAT) { }
 
-  public override void CreateHighLights()
+  public override void CreateHighlights()
   {
     CreateHighLightsPartial(_gridPosition + Vector2I.Down);
     CreateHighLightsPartial(_gridPosition + Vector2I.Up);

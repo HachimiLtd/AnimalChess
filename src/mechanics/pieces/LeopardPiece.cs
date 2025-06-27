@@ -5,7 +5,7 @@ public partial class LeopardPiece : PieceInstance
 {
   public LeopardPiece() : base(PieceType.LEOPARD) { }
 
-  public override void CreateHighLights()
+  public override void CreateHighlights()
   {
     CreateHighLightsPartial(_gridPosition + Vector2I.Down);
     CreateHighLightsPartial(_gridPosition + Vector2I.Up);

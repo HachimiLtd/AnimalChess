@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public record struct ChessOperation(Vector2I From, Vector2I To);
+public record struct ChessOperation(Vector2I From, Vector2I To, Vector4I param);
+public record struct ChessMove(Vector2I From, Vector2I To);
 
 public struct ChessPieceInitialArrangement
 {
@@ -29,7 +30,9 @@ public enum GroundType
     NORMAL,
     FLOODED,
     TRAP,
-    NEST,
+    NEST, //Nest precursor
+    NEST_REAL,
+    NEST_FAKE,
     BOUNDARY,
     //just hate writing ifs everywhere for damn boundary conditions
 
@@ -39,6 +42,27 @@ public enum RoleType
 {
     P1,
     P2,
+}
+
+public enum EndingType
+{
+    ERROR,
+    P1W,
+    P2W,
+    DRAW,
+}
+
+public enum TurnStage
+{
+    INITWAIT,
+    INIT,
+    LOOPHEAD,
+    MOVE_DECISION,
+    PARAM_DECISION,
+    WAITING,
+    LOOPEND,
+    ENDED = 128,
+    ERROR = -1,
 }
 
 public static class ACGlobal{

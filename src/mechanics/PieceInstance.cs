@@ -53,8 +53,10 @@ public abstract partial class PieceInstance : Button
         }
     }
 
-    public abstract void CreateHighLights();
+    public abstract void CreateHighlights();
     public abstract void UpdateDisplay();
+
+    //public abstract void CreateSpecialHighlights();
 
     protected void CreateHighlight( Vector2I at )
     {
@@ -87,7 +89,7 @@ public abstract partial class PieceInstance : Button
 
     public void HandlePressed()
     {
-        if(!_system.CurrentlyPlaying && !Choosable)
+        if(!_system.CurrentlyPlaying || !Choosable)
             return;
         _system.HandlePieceSelection(_gridPosition);
     }
@@ -97,7 +99,7 @@ public abstract partial class PieceInstance : Button
     public void HandleSubmitMove(Vector2I dest)
     {
         ClearHighlights();
-        _system.HandleLocalOperation(new ChessOperation(_gridPosition,dest));
+        _system.HandleChessMove(new ChessMove(_gridPosition,dest));
     }
 
     

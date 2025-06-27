@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cryw7lnad8322"]
+[gd_scene load_steps=5 format=3 uid="uid://cryw7lnad8322"]
 
 [ext_resource type="Script" uid="uid://brrrg4x560gaq" path="res://src/scenes/World.cs" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://b4ck7qv1yal3h" path="res://scenes/chess_system.tscn" id="2_4wyf3"]
+[ext_resource type="Texture2D" uid="uid://cwk6egag88iyg" path="res://assets/sprites/test_status_banner.png" id="2_k0juu"]
+[ext_resource type="Script" uid="uid://cmsq47i7ytxht" path="res://src/rendering/PlayerStatusDisplay.cs" id="3_71j4m"]
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_rwgxs")
@@ -19,8 +21,42 @@ custom_minimum_size = Vector2(576, 576)
 offset_right = 576.0
 offset_bottom = 576.0
 
-[node name="Control" type="Control" parent="CenterContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="CenterContainer/HBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(32, 128)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CenterContainer/HBoxContainer/CenterContainer2/Control2"]
+texture = ExtResource("2_k0juu")
+centered = false
+flip_h = true
+flip_v = true
+hframes = 3
+script = ExtResource("3_71j4m")
+
+[node name="Control" type="Control" parent="CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(576, 576)
 layout_mode = 2
 
-[node name="ChessSystem" parent="CenterContainer/Control" instance=ExtResource("2_4wyf3")]
+[node name="ChessSystem" parent="CenterContainer/HBoxContainer/Control" node_paths=PackedStringArray("_playerStatusDisplayP1", "_playerStatusDisplayP2") instance=ExtResource("2_4wyf3")]
+_playerStatusDisplayP1 = NodePath("../../CenterContainer2/Control2/Sprite2D")
+_playerStatusDisplayP2 = NodePath("../../CenterContainer/Control2/Sprite2D")
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="CenterContainer/HBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(32, 128)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CenterContainer/HBoxContainer/CenterContainer/Control2"]
+texture = ExtResource("2_k0juu")
+centered = false
+hframes = 3
+script = ExtResource("3_71j4m")

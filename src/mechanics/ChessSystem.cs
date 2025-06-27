@@ -15,6 +15,11 @@ public enum MoveValidation
 
 public partial class ChessSystem : Node2D
 {
+    [Export]
+    private PlayerStatusDisplay _playerStatusDisplayP1;
+    [Export]
+    private PlayerStatusDisplay _playerStatusDisplayP2;
+
     // Constants for board dimensions
     private const int BOARD_WIDTH = 12;
     private const int BOARD_HEIGHT = 12;
@@ -46,6 +51,7 @@ public partial class ChessSystem : Node2D
 
     private ChessBoard _chessBoard;
     private FogControl _fog;
+    private ChessProcessControl _control;
     public Node2D MountHightlights;
     public Node2D MountPieces;
 
@@ -54,6 +60,7 @@ public partial class ChessSystem : Node2D
 
     //public bool HightlightsExist = false;
     public PieceInstance HighlightOwner = null;
+
 
     ChessSystem()
     {
@@ -73,6 +80,9 @@ public partial class ChessSystem : Node2D
         MountPieces = (Node2D)GetNode("MountPieces");
         _chessBoard = (ChessBoard)GetNode("ChessBoard");
         _fog = (FogControl)GetNode("FogPanel");
+        _control = (ChessProcessControl)GetNode("Controler");
+        _control.PlayerStatusDisplayP1 = _playerStatusDisplayP1;
+        _control.PlayerStatusDisplayP2 = _playerStatusDisplayP2;
 
 
         ChessPieceInitialArrangement arr = CreateInitialArrangement();
@@ -143,6 +153,7 @@ public partial class ChessSystem : Node2D
         HighlightOwner = null;
         _fog.UpdateFogData();
         _fog.UpdateFog();
+        _control.GameInit();
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
     {
@@ -165,14 +176,9 @@ public partial class ChessSystem : Node2D
         _pieceLayer[pos.X][pos.Y] = null;
     }
 
-    public void HandleLocalOperation(ChessOperation operation)
+    public void ActChessMove(Vector2I from, Vector2I to)
     {
-        HandleOperation(operation.From, operation.To);
-    }
-
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void HandleOperation(Vector2I from, Vector2I to)
-    {
+        
         PieceInstance instance = _pieceLayer[from.X][from.Y];
         if (instance == null)
             ///////////////////THIS SHOULDN'T HAPPEN//////////////////////
@@ -197,11 +203,38 @@ public partial class ChessSystem : Node2D
 
         instance.GridPosition = to;
 
-
         Tween tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(() => { _fog.UpdateFog(); })).SetDelay(ACGlobal.ANIMATION_TIME_1 / 2.0);
+    }
+    public void HandleChessMove(ChessMove move)
+    {
+        ActChessMove(move.From, move.To);
+        _control.SwitchStageParam(move);
+    }
 
-        Rpc(nameof(HandleOperation), from, to);
+    public void HandleOperation(ChessOperation operation)
+    {
+        Vector2I from = operation.From;
+        Vector2I to = operation.To;
+        Vector4I param = operation.param;
+        
+        if(_control.Stage == TurnStage.WAITING)
+        {
+            //PieceInstance instance = _pieceLayer[to.X][to.Y];
+            ActChessMove(from,to);
+            _control.SwitchStageMove();
+        }
+        else
+        {
+            PieceInstance instance = _pieceLayer[from.X][from.Y];
+            Rpc(nameof(HandleOperationEncode), from, to, param);
+        }
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public void HandleOperationEncode(Vector2I from, Vector2I to, Vector4I param)
+    {
+        HandleOperation(new ChessOperation(from,to,param));
     }
     public bool CheckVisibility(Vector2I pos)
     {
@@ -215,11 +248,11 @@ public partial class ChessSystem : Node2D
     public void HandlePieceSelection(Vector2I position)
     {
         PieceInstance inst = _pieceLayer[position.X][position.Y];
-        if (inst == null || inst.Player != PlayerRole)
+        if (inst == null || !CurrentlyPlaying || inst.Player != PlayerRole)
             return;
 
         if (HighlightOwner == null)
-            inst.CreateHighLights();
+            inst.CreateHighlights();
         else
         {
             HighlightOwner.ClearHighlights();

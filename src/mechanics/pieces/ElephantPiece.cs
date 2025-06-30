@@ -49,9 +49,9 @@ public partial class ElephantPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
-                    if (_system.IsGridKnown(dest) && instance.Type > _type)
+                    if (_system.IsGridKnown(dest) && (instance.Type > _type || instance.Type == PieceType.RAT))
                         return;
-                    if (!_system.IsGridKnown(dest) && instance.Type > _type)
+                    if (!_system.IsGridKnown(dest) && (instance.Type > _type || instance.Type == PieceType.RAT))
                     {
                         CreateHighlight(dest, HighlightType.PSEUDO);
                         return;

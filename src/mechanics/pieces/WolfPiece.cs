@@ -48,8 +48,13 @@ public partial class WolfPiece : PieceInstance
           PieceInstance instance = _system.PieceLayer[x][y];
           if (instance.Player == _player)
             return;
-          if (instance.Type > _type)
+          if (_system.IsGridKnown(dest) && instance.Type > _type)
             return;
+          if (!_system.IsGridKnown(dest) && instance.Type > _type)
+          {
+            CreateHighlight(dest, HighlightType.PSEUDO);
+            return;
+          }
         }
         CreateHighlight(dest);
         return;
@@ -57,6 +62,11 @@ public partial class WolfPiece : PieceInstance
   }
 
   public override void UpdateDisplay()
+  {
+
+  }
+
+  public override void CreateParamHighlights()
   {
 
   }

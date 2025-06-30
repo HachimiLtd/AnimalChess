@@ -121,7 +121,7 @@ public abstract partial class PieceInstance : Button
     {
         foreach(PieceHighlight child in highlights)
         {
-            child.Destroy();
+            child.ForceDestroy();
         }
         highlights.Clear();
     }

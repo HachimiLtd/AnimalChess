@@ -80,9 +80,9 @@ public partial class ChessProcessControl : Node
     {
         Stage = TurnStage.PARAM_DECISION;
         tempMove = move;
-        //////////////////////////////////TODO//////////////////////////////////
-            //TEMPORARY CODE FOR TESTING:
-            SwitchStageWait(new Vector4I(0,0,0,0));
+
+        PieceInstance instance = _system.PieceLayer[move.To.X][move.To.Y];
+        instance.CreateParamHighlights();
     }
 
     public void SwitchStageWait(Vector4I param)

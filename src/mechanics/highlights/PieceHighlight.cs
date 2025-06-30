@@ -51,6 +51,14 @@ public partial class PieceHighlight : Button
         tween.TweenCallback(Callable.From(QueueFree)).SetDelay(0.1);
     }
 
+    public void ForceDestroy()
+    {
+        _disabled = true;
+        Tween tween = GetTree().CreateTween();
+        tween.TweenProperty(this,"modulate",new Color(1.0f,1.0f,1.0f,0.0f),0.1);
+        tween.TweenCallback(Callable.From(QueueFree)).SetDelay(0.1);
+    }
+
     public override void _Ready()
     {
         base._Ready();

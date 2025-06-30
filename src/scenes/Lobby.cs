@@ -26,8 +26,6 @@ public partial class Lobby : Control
     // Connect multiplayer signals
     _multiplayer.ConnectionSuccessful += OnConnectionSuccessful;
     _multiplayer.ConnectionFailed += OnConnectionFailed;
-    _multiplayer.PlayerConnected += OnPlayerConnected;
-    _multiplayer.PlayerDisconnected += OnPlayerDisconnected;
 
     _joinBtn.ButtonDown += OnJoinButtonPressed;
     _hostBtn.ButtonDown += OnHostButtonPressed;
@@ -62,6 +60,7 @@ public partial class Lobby : Control
     {
       GD.Print($"Successfully hosting game on port {port}");
       // Optionally switch to game scene or show waiting screen
+      GetTree().ChangeSceneToFile("res://scenes/wait.tscn");
     }
     else
     {
@@ -83,23 +82,6 @@ public partial class Lobby : Control
     // Show error message to user
   }
 
-  private void OnPlayerConnected(long id)
-  {
-    GD.Print($"Player {id} joined the game");
-
-    // If we're the host and we now have 2 players, start the game
-    if (_multiplayer.IsHost && _multiplayer.GetPlayerCount() >= 2)
-    {
-      GD.Print("Game is ready to start!");
-      GetTree().ChangeSceneToFile("res://scenes/world.tscn");
-    }
-  }
-
-  private void OnPlayerDisconnected(long id)
-  {
-    GD.Print($"Player {id} left the game");
-  }
-
   private void AddMultiplayerManager()
   {
     GetTree().Root.AddChild(_multiplayer);
@@ -112,8 +94,6 @@ public partial class Lobby : Control
     {
       _multiplayer.ConnectionSuccessful -= OnConnectionSuccessful;
       _multiplayer.ConnectionFailed -= OnConnectionFailed;
-      _multiplayer.PlayerConnected -= OnPlayerConnected;
-      _multiplayer.PlayerDisconnected -= OnPlayerDisconnected;
     }
   }
 }

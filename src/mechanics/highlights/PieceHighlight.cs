@@ -53,6 +53,8 @@ public partial class PieceHighlight : Button
 
     public void ForceDestroy()
     {
+        if(_disabled)
+            return;
         _disabled = true;
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(this,"modulate",new Color(1.0f,1.0f,1.0f,0.0f),0.1);
@@ -81,7 +83,10 @@ public partial class PieceHighlight : Button
             return;
         _spr.Frame = 2;
         if(!_disabled)
+        {
+            Destroy();
             SubmitSignal();
+        }
     }
     
     public void HandleButtonDown()

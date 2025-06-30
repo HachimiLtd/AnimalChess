@@ -4,13 +4,14 @@ using Godot.Collections;
 public partial class Wait : Control
 {
   private MultiplayerManager _multiplayer;
+  private LineEdit _ipPlaceholder;
   private VBoxContainer _ipContainer;
   private Array<LineEdit> _ipLabels = new Array<LineEdit>();
 
   public override void _Ready()
   {
     base._Ready();
-    
+
     if (!HasNode("/root/MultiplayerManager"))
     {
       _multiplayer = new MultiplayerManager();
@@ -22,6 +23,7 @@ public partial class Wait : Control
       _multiplayer = GetNode<MultiplayerManager>("/root/MultiplayerManager");
     }
 
+    _ipPlaceholder = GetNode<LineEdit>("Panel/Control/VC/HC/IPLabelPlaceholder");
     _ipContainer = GetNode<VBoxContainer>("Panel/Control/SC/MC/IPContainer");
 
     _multiplayer.PlayerConnected += OnPlayerConnected;
@@ -29,6 +31,18 @@ public partial class Wait : Control
 
     GD.Print("IPs: ");
     string[] ips = NetUtils.GetValidIPv4Addresses();
+
+    if (ips.Length == 0)
+    {
+      GD.Print("No valid IP addresses found.");
+      _ipPlaceholder.Text = "Not Detected.";
+      return;
+    }
+    else
+    {
+      _ipPlaceholder.Text = "";
+    }
+
     foreach (string ip in ips)
     {
       GD.Print(ip);

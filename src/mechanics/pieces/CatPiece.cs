@@ -50,8 +50,13 @@ public partial class CatPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
-                    if (instance.Type > _type)
+                    if (_system.IsGridKnown(dest) && instance.Type > _type)
                         return;
+                    if (!_system.IsGridKnown(dest) && instance.Type > _type)
+                    {
+                        CreateHighlight(dest, HighlightType.PSEUDO);
+                        return;
+                    }
                 }
                 CreateHighlight(dest);
                 return;

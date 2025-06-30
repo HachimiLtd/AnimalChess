@@ -65,12 +65,12 @@ theme = ExtResource("1_m1txw")
 script = ExtResource("2_m1txw")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-root_node = NodePath("../Panel/Control/VBoxContainer/Label3")
+root_node = NodePath("../Panel/Control/VC/Label3")
 tree_root = SubResource("AnimationNodeStateMachine_2tt6m")
 anim_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
-root_node = NodePath("../../Panel/Control/VBoxContainer/Label3")
+root_node = NodePath("../../Panel/Control/VC/Label3")
 libraries = {
 &"": SubResource("AnimationLibrary_2tt6m")
 }
@@ -99,7 +99,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Control"]
+[node name="VC" type="VBoxContainer" parent="Panel/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,26 +107,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Control/VBoxContainer"]
+[node name="HC" type="HBoxContainer" parent="Panel/Control/VC"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/Control/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Panel/Control/VC/HC"]
 layout_mode = 2
 text = "IP Address:"
 
-[node name="IPLabelPlaceholder" type="LineEdit" parent="Panel/Control/VBoxContainer/HBoxContainer"]
+[node name="IPLabelPlaceholder" type="LineEdit" parent="Panel/Control/VC/HC"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_m1txw")
 alignment = 2
 editable = false
 
-[node name="Control" type="Control" parent="Panel/Control/VBoxContainer"]
+[node name="Control" type="Control" parent="Panel/Control/VC"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label3" type="Label" parent="Panel/Control/VBoxContainer"]
-modulate = Color(1, 1, 1, 0.411076)
+[node name="Label3" type="Label" parent="Panel/Control/VC"]
+modulate = Color(1, 1, 1, 0.955557)
 layout_mode = 2
 text = "Please wait for another player..."
 horizontal_alignment = 1

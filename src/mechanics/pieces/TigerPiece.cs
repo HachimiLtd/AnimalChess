@@ -11,7 +11,7 @@ public partial class TigerPiece : PieceInstance
         CreateHighLightsPartial(Vector2I.Left);
         CreateHighLightsPartial(Vector2I.Right);
     }
-    private void CreateHighLightsPartial(Vector2I offset)
+    private void CreateHighLightsPartial(Vector2I offset, HighlightType type = HighlightType.NORMAL)
     {
         int x = _gridPosition.X + offset.X;
         int y = _gridPosition.Y + offset.Y;
@@ -31,9 +31,13 @@ public partial class TigerPiece : PieceInstance
             case GroundType.FLOODED:
                 if (_system.PieceLayer[x][y] != null)
                 {
+                    if (_system.PieceLayer[x][y].Visible)
+                        return;
+                    else
+                        CreateHighLightsPartial(offset + offset.Clamp(-1, 1), HighlightType.PSEUDO);
                     return;
                 }
-                CreateHighLightsPartial(offset + offset.Clamp(-1, 1));
+                CreateHighLightsPartial(offset + offset.Clamp(-1, 1), type);
                 return;
             case GroundType.NEST:
             case GroundType.NEST_REAL:
@@ -54,15 +58,25 @@ public partial class TigerPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
-                    if (instance.Type > _type)
+                    if (_system.IsGridKnown(_gridPosition + offset) && instance.Type > _type)
                         return;
+                    if (!_system.IsGridKnown(_gridPosition + offset) && instance.Type > _type)
+                    {
+                        CreateHighlight(_gridPosition + offset, HighlightType.PSEUDO);
+                        return;
+                    }
                 }
-                CreateHighlight(_gridPosition + offset);
+                CreateHighlight(_gridPosition + offset, type);
                 return;
         }
     }
 
     public override void UpdateDisplay()
+    {
+
+    }
+
+    public override void CreateParamHighlights()
     {
 
     }

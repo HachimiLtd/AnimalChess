@@ -47,8 +47,13 @@ public partial class RatPiece : PieceInstance
           PieceInstance instance = _system.PieceLayer[x][y];
           if (instance.Player == _player)
             return;
-          if (instance.Type > _type && instance.Type != PieceType.ELEPHANT)
+          if (_system.IsGridKnown(dest) && instance.Type > _type)
             return;
+          if (!_system.IsGridKnown(dest) && instance.Type > _type)
+          {
+            CreateHighlight(dest, HighlightType.PSEUDO);
+            return;
+          }
         }
         CreateHighlight(dest);
         return;
@@ -56,6 +61,11 @@ public partial class RatPiece : PieceInstance
   }
 
   public override void UpdateDisplay()
+  {
+
+  }
+
+  public override void CreateParamHighlights()
   {
 
   }

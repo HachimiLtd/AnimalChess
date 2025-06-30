@@ -223,6 +223,17 @@ public partial class ChessSystem : Node2D
             _fog.UpdateFogData();
         }
 
+        for(int i=1;i<=_groundSize.X;i++)
+            for(int j=1;j<=_groundSize.Y;j++)
+            {
+                PieceInstance inst = _pieceLayer[i][j];
+                if(inst==null || !inst.Visible)
+                    continue;
+                if(inst.Visible == true && !CheckVisibility(new Vector2I(i,j)))
+                    continue;
+                inst.UnknownStat = false;
+            }
+
         Tween tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(() => { _fog.UpdateFog(); })).SetDelay(ACGlobal.ANIMATION_TIME_1 / 2.0);
     }
@@ -243,15 +254,6 @@ public partial class ChessSystem : Node2D
         Vector2I from = operation.From;
         Vector2I to = operation.To;
         Vector4I param = operation.param;
-        
-        for(int i=1;i<=_groundSize.X;i++)
-            for(int j=1;j<=_groundSize.Y;j++)
-            {
-                PieceInstance instance = _pieceLayer[i][j];
-                if(instance==null || !instance.Visible)
-                    continue;
-                instance.UnknownStat = false;
-            }
         
         if(_control.Stage == TurnStage.WAITING)
         {
@@ -279,8 +281,11 @@ public partial class ChessSystem : Node2D
     public void HandlePieceSelection(Vector2I position)
     {
         PieceInstance inst = _pieceLayer[position.X][position.Y];
-        if (inst == null || !CurrentlyPlaying || inst.Player != PlayerRole)
-            return;
+        if ( inst == null ||
+            _control.Stage != TurnStage.MOVE_DECISION ||
+            !CurrentlyPlaying ||
+            inst.Player != PlayerRole )
+                return;
 
         if (HighlightOwner == null)
             inst.CreateHighlights();

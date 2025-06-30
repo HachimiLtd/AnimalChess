@@ -30,9 +30,13 @@ public abstract partial class PieceInstance : Button
         get{ return _gridPosition; }
         set
         {
+            if(_gridPosition == value)
+                return;
             if(IsNodeReady())
             {
-                if(_system.CheckVisibility(value))
+                if(Player == _system.PlayerRole)
+                    Move(value);
+                else if(_system.CheckVisibility(value))
                 {
                     if(Visible)
                         Move(value);
@@ -49,6 +53,7 @@ public abstract partial class PieceInstance : Button
     }
 
     private bool _unknownStat = false;
+    private Tween tweenUnknownStat;
     public bool UnknownStat
     {
         get{return _unknownStat;}
@@ -56,6 +61,8 @@ public abstract partial class PieceInstance : Button
         {
             if(_unknownStat==value)
                 return;
+            if(tweenUnknownStat != null)
+                tweenUnknownStat.Kill();
             if(value)
             {
                 _markSpr.Visible = true;
@@ -66,10 +73,10 @@ public abstract partial class PieceInstance : Button
             {
                 _animalSpr.Visible = true;
                 _animalSpr.Modulate = new Color(1.0f,1.0f,1.0f,.0f);
-                Tween tween = GetTree().CreateTween();
-                tween.TweenProperty(_animalSpr,"modulate",new Color(1.0f,1.0f,1.0f,1.0f),ACGlobal.ANIMATION_TIME_1);
-                tween.TweenProperty(_markSpr,"modulate",new Color(1.0f,1.0f,1.0f,.0f),ACGlobal.ANIMATION_TIME_1);
-                tween.TweenCallback(Callable.From(()=>{ _markSpr.Visible = false; }));
+                tweenUnknownStat = GetTree().CreateTween();
+                tweenUnknownStat.TweenProperty(_animalSpr,"modulate",new Color(1.0f,1.0f,1.0f,1.0f),ACGlobal.ANIMATION_TIME_1);
+                tweenUnknownStat.TweenProperty(_markSpr,"modulate",new Color(1.0f,1.0f,1.0f,.0f),ACGlobal.ANIMATION_TIME_1);
+                tweenUnknownStat.TweenCallback(Callable.From(()=>{ _markSpr.Visible = false; }));
             }
             _unknownStat = value;
         }
@@ -173,6 +180,10 @@ public abstract partial class PieceInstance : Button
     }
     public void MoveOutSecretly(Vector2I to)
     {
+        /*if(_unknownStat)
+        {
+            _animalSpr.Visible = false;
+        }*/
         Vector2 toPos = GridSystem.GridToWorld(to);
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,0.0f), ACGlobal.ANIMATION_TIME_1/2);
@@ -181,6 +192,10 @@ public abstract partial class PieceInstance : Button
                 Position = toPos;
                 Modulate = new Color(1.0f,1.0f,1.0f);
             })).SetDelay(ACGlobal.ANIMATION_TIME_1/1.95);
+        /*tween.TweenCallback(Callable.From(()=>
+            {
+                _animalSpr.Visible = true;
+            })).SetDelay(ACGlobal.ANIMATION_TIME_1/0.8);*/
         _gridPosition = to;
     }
     public void MoveInSecretly(Vector2I to)

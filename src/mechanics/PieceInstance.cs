@@ -8,6 +8,7 @@ public abstract partial class PieceInstance : Button
     public delegate void ReachNestEventHandler(PieceInstance instance);
 
     protected static PackedScene _resPieceHighlight = (PackedScene)GD.Load("res://scenes/piece_highlight.tscn");
+    protected static PackedScene _resPiecePseudoHighlight = (PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn");
 
     protected ChessSystem _system;
 
@@ -42,6 +43,40 @@ public abstract partial class PieceInstance : Button
         }
     }
 
+    private bool _unknownStat = false;
+    public bool UnknownStat
+    {
+        get{return _unknownStat;}
+        set
+        {
+            if(_unknownStat==value)
+                return;
+            if(value)
+            {
+                _markSpr.Visible = true;
+                _animalSpr.Visible = false;
+                _markSpr.Modulate = new Color(1.0f,1.0f,1.0f,1.0f);
+            }
+            else
+            {
+                _animalSpr.Visible = true;
+                _animalSpr.Modulate = new Color(1.0f,1.0f,1.0f,.0f);
+                Tween tween = GetTree().CreateTween();
+                tween.TweenProperty(_animalSpr,"modulate",new Color(1.0f,1.0f,1.0f,1.0f),ACGlobal.ANIMATION_TIME_1);
+                tween.TweenProperty(_markSpr,"modulate",new Color(1.0f,1.0f,1.0f,.0f),ACGlobal.ANIMATION_TIME_1);
+                tween.TweenCallback(Callable.From(()=>{ _markSpr.Visible = false; }));
+            }
+            _unknownStat = value;
+        }
+    }
+    public void forceToBeKnown()
+    {
+        _unknownStat = false;
+        _markSpr.Visible = false;
+        _animalSpr.Visible = true;
+        _animalSpr.Modulate = new Color(1.0f,1.0f,1.0f,1.0f);
+    }
+
     private bool _choosable = false;
     public bool Choosable
     {
@@ -53,6 +88,9 @@ public abstract partial class PieceInstance : Button
         }
     }
 
+    private CanvasItem _animalSpr;
+    private CanvasItem _markSpr;
+
     public abstract void CreateHighlights();
     public abstract void UpdateDisplay();
 
@@ -62,6 +100,16 @@ public abstract partial class PieceInstance : Button
     {
         _system.HighlightOwner = this;
         PieceHighlight highlight = (PieceHighlight)_resPieceHighlight.Instantiate();
+
+        highlights.Add(highlight);
+        _system.MountHightlights.AddChild(highlight);
+        highlight.Initialize(_gridPosition,at);
+        highlight.SubmitMove += HandleSubmitMove;
+    }
+    protected void CreatePseudoHighlight(Vector2I at)
+    {
+        _system.HighlightOwner = this;
+        PieceHighlight highlight = (PieceHighlight)_resPiecePseudoHighlight.Instantiate();
 
         highlights.Add(highlight);
         _system.MountHightlights.AddChild(highlight);
@@ -85,6 +133,8 @@ public abstract partial class PieceInstance : Button
         base._Ready();
         _system = (ChessSystem)GetNode("../..");
         Pressed += HandlePressed;
+        _animalSpr = (CanvasItem)GetNode("Label");
+        _markSpr = (CanvasItem)GetNode("Mark");
     }
 
     public void HandlePressed()
@@ -109,7 +159,7 @@ public abstract partial class PieceInstance : Button
         Vector2 toPos = GridSystem.GridToWorld(to);
         Tween tween = GetTree().CreateTween();
         tween.TweenProperty(this, "position", toPos, ACGlobal.ANIMATION_TIME_1);
-        tween.TweenCallback(Callable.From(UpdateDisplay));
+        tween.TweenCallback(Callable.From(UpdateDisplay)).SetDelay(ACGlobal.ANIMATION_TIME_1/2);
         _gridPosition = to;
     }
     public void MoveOutSecretly(Vector2I to)
@@ -126,6 +176,8 @@ public abstract partial class PieceInstance : Button
     }
     public void MoveInSecretly(Vector2I to)
     {
+        UnknownStat = true;
+
         Vector2 toPos = GridSystem.GridToWorld(to);
         Position = toPos;
         Modulate = new Color(1.0f,1.0f,1.0f,0.0f);

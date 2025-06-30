@@ -15,11 +15,27 @@ public partial class CatPiece : PieceInstance
     {
         int x = dest.X;
         int y = dest.Y;
+
         switch (_system.GroundLayer[x][y])
         {
             case GroundType.BOUNDARY:
                 return;
             case GroundType.TRAP:
+                if (_system.PieceLayer[x][y] != null)
+                {
+                    PieceInstance instance = _system.PieceLayer[x][y];
+                    if (instance.Player == _player)
+                        return;
+                }
+                CreateHighlight(dest);
+                return;
+            case GroundType.FLOODED:
+                return;
+            case GroundType.NEST:
+            case GroundType.NEST_REAL:
+            case GroundType.NEST_FAKE:
+                if (_system.RoleArrangement[x - 1][y - 1] == _player)
+                    return;
                 if (_system.PieceLayer[x][y] != null)
                 {
                     PieceInstance instance = _system.PieceLayer[x][y];

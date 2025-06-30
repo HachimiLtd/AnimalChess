@@ -28,6 +28,21 @@ public partial class LeopardPiece : PieceInstance
         }
         CreateHighlight(dest);
         return;
+      case GroundType.FLOODED:
+        return;
+      case GroundType.NEST:
+      case GroundType.NEST_REAL:
+      case GroundType.NEST_FAKE:
+        if (_system.RoleArrangement[x - 1][y - 1] == _player)
+          return;
+        if (_system.PieceLayer[x][y] != null)
+        {
+          PieceInstance instance = _system.PieceLayer[x][y];
+          if (instance.Player == _player)
+            return;
+        }
+        CreateHighlight(dest);
+        return;
       default:
         if (_system.PieceLayer[x][y] != null)
         {

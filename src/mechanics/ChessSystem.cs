@@ -44,10 +44,12 @@ public partial class ChessSystem : Node2D
     private Vector2I _groundSize;
     private GroundType[][] _groundLayer;
     private PieceInstance[][] _pieceLayer;
+    private RoleType[][] _roleArrangement;
     //private List<PieceInstance> _pieceInstanceList;
     public Vector2I GroundSize { get { return _groundSize; } set { _groundSize = value; } }
     public GroundType[][] GroundLayer { get { return _groundLayer; } set { _groundLayer = value; } }
     public PieceInstance[][] PieceLayer { get { return _pieceLayer; } set { _pieceLayer = value; } }
+    public RoleType[][] RoleArrangement { get { return _roleArrangement; } set { _roleArrangement = value; } }
 
     private ChessBoard _chessBoard;
     private FogControl _fog;
@@ -66,10 +68,12 @@ public partial class ChessSystem : Node2D
     {
         _pieceLayer = new PieceInstance[24][];
         _groundLayer = new GroundType[24][];
+        _roleArrangement = new RoleType[24][];
         for (int i = 0; i < 24; i++)
         {
             _pieceLayer[i] = new PieceInstance[24];
             _groundLayer[i] = new GroundType[24];
+            _roleArrangement[i] = new RoleType[24];
         }
     }
 
@@ -106,15 +110,14 @@ public partial class ChessSystem : Node2D
             }
         }
 
-        arrangement.roleMap = new RoleType[BOARD_HEIGHT][];
         for (int i = 0; i < BOARD_HEIGHT; i++)
         {
-            arrangement.roleMap[i] = new RoleType[BOARD_WIDTH];
             for (int j = 0; j < BOARD_WIDTH; j++)
             {
-                arrangement.roleMap[i][j] = i >= 6 ? RoleType.P2 : RoleType.P1;
+                _roleArrangement[i][j] = i >= 6 ? RoleType.P2 : RoleType.P1;
             }
         }
+        arrangement.roleMap = _roleArrangement;
 
         arrangement.typeMap[0][0] = PieceType.WOLF;
         arrangement.typeMap[2][0] = PieceType.LION;

@@ -5,6 +5,8 @@ public partial class PieceHighlight : Button
 {
     [Signal]
     public delegate void SubmitMoveEventHandler( Vector2I target );
+    [Signal]
+    public delegate void SubmitParamEventHandler( Vector4I param );
 
     protected Vector2I _initPosition;
     protected Vector2I _gridPosition;

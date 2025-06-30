@@ -232,6 +232,12 @@ public partial class ChessSystem : Node2D
         _control.SwitchStageParam(move);
     }
 
+    public void HandleChessParam(Vector4I param)
+    {
+        _control.SwitchStageWait(param);
+    }
+
+    //////////////// TODO: Special skill effects(param) should ALWAYS be processed in this func. //////////////.
     public void HandleOperation(ChessOperation operation)
     {
         Vector2I from = operation.From;
@@ -269,10 +275,6 @@ public partial class ChessSystem : Node2D
     {
         return _fog.CheckVisibility(pos);
     }
-
-    /*
-    public void SyncStatusBetweenPlayers(){}
-    */
 
     public void HandlePieceSelection(Vector2I position)
     {

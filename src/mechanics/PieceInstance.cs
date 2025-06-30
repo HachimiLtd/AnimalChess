@@ -4,11 +4,16 @@ using Godot;
 
 public abstract partial class PieceInstance : Button
 {
-    [Signal]
-    public delegate void ReachNestEventHandler(PieceInstance instance);
-
-    protected static PackedScene _resPieceHighlight = (PackedScene)GD.Load("res://scenes/piece_highlight.tscn");
-    protected static PackedScene _resPiecePseudoHighlight = (PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn");
+    public enum HighlightType
+    {
+        ERROR,
+        NORMAL,
+        PSEUDO,
+    }
+    protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
+        {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
+        {HighlightType.PSEUDO,(PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn")}
+    };
 
     protected ChessSystem _system;
 
@@ -92,29 +97,24 @@ public abstract partial class PieceInstance : Button
     private CanvasItem _markSpr;
 
     public abstract void CreateHighlights();
+    public abstract void CreateParamHighlights();
+        //Use CreateHighlight to create special PieceHighlight that emits SubmitParam signal
+        //Or, use SkipSubmitParam
+    
     public abstract void UpdateDisplay();
 
     //public abstract void CreateSpecialHighlights();
 
-    protected void CreateHighlight( Vector2I at )
+    protected void CreateHighlight(Vector2I at,HighlightType type = HighlightType.NORMAL)
     {
         _system.HighlightOwner = this;
-        PieceHighlight highlight = (PieceHighlight)_resPieceHighlight.Instantiate();
+        PieceHighlight highlight = (PieceHighlight)_resHightlights[type].Instantiate();
 
         highlights.Add(highlight);
         _system.MountHightlights.AddChild(highlight);
         highlight.Initialize(_gridPosition,at);
         highlight.SubmitMove += HandleSubmitMove;
-    }
-    protected void CreatePseudoHighlight(Vector2I at)
-    {
-        _system.HighlightOwner = this;
-        PieceHighlight highlight = (PieceHighlight)_resPiecePseudoHighlight.Instantiate();
-
-        highlights.Add(highlight);
-        _system.MountHightlights.AddChild(highlight);
-        highlight.Initialize(_gridPosition,at);
-        highlight.SubmitMove += HandleSubmitMove;
+        highlight.SubmitParam += HandleSubmitParam;
     }
 
     public void ClearHighlights()
@@ -152,6 +152,15 @@ public abstract partial class PieceInstance : Button
         _system.HandleChessMove(new ChessMove(_gridPosition,dest));
     }
 
+    public void SkipSubmitParam()
+    {
+        HandleSubmitParam(Vector4I.Zero);
+    }
+    public void HandleSubmitParam(Vector4I param)
+    {
+        ClearHighlights();
+        _system.HandleChessParam(param);
+    }
     
     //Animation
     public void Move(Vector2I to)

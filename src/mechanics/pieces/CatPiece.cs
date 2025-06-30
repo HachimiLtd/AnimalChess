@@ -62,4 +62,9 @@ public partial class CatPiece : PieceInstance
     {
 
     }
+
+    public override void CreateParamHighlights()
+    {
+        
+    }
 }

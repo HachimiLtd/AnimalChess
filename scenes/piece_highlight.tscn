@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://wian0f7okpep"]
 
 [ext_resource type="Texture2D" uid="uid://bo74xiysamt0g" path="res://assets/sprites/test_hightlight_basic.png" id="1_jja60"]
-[ext_resource type="Script" uid="uid://cpkbbk2xtuuxg" path="res://src/mechanics/PieceHighlight.cs" id="2_0jly3"]
+[ext_resource type="Script" uid="uid://cpkbbk2xtuuxg" path="res://src/mechanics/highlights/PieceHighlight.cs" id="2_0jly3"]
 
 [node name="PieceHighlight" type="Button"]
 self_modulate = Color(1, 1, 1, 0)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxa4l4kfrqfhs"]
+
+[ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_4455p"]
+[ext_resource type="Script" uid="uid://cy3jft4qwpbc2" path="res://src/mechanics/PiecePseudoHighlight.cs" id="2_akq30"]
+
+[node name="PiecePseudoHighlight" instance=ExtResource("1_4455p")]
+script = ExtResource("2_akq30")

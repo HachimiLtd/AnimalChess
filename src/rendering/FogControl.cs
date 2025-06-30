@@ -56,7 +56,12 @@ public partial class FogControl : Panel
         for(int i=0;i<sx;i++)
             for(int j=0;j<sy;j++)
                 if(_system.PieceLayer[i+1][j+1]!=null)
-                    _system.PieceLayer[i+1][j+1].Visible = CheckVisibility(new Vector2I(i+1,j+1));
+                    {
+                        bool tarV = CheckVisibility(new Vector2I(i+1,j+1));
+                        if(_system.PieceLayer[i+1][j+1].Visible && !tarV)
+                            _system.PieceLayer[i+1][j+1].forceToBeKnown();
+                        _system.PieceLayer[i+1][j+1].Visible = tarV;
+                    }
     }
 
     public bool CheckVisibility(Vector2I pos)

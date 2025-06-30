@@ -6,11 +6,12 @@ public partial class PieceHighlight : Button
     [Signal]
     public delegate void SubmitMoveEventHandler( Vector2I target );
 
-    private Vector2I _gridPosition;
-    private Vector2 _dest;
+    protected Vector2I _initPosition;
+    protected Vector2I _gridPosition;
+    protected Vector2 _dest;
     private double _timepassed = .0;
-    private bool _ready = false;
-    private bool _disabled = false;
+    protected bool _ready = false;
+    protected bool _disabled = false;
     private double _totalDist;
 
     private Sprite2D _spr;
@@ -25,6 +26,7 @@ public partial class PieceHighlight : Button
     public void Initialize(Vector2I pos,Vector2I dest)
     {
         Position = GridSystem.GridToWorld(pos);
+        _initPosition = pos;
         _gridPosition = dest;
         _dest = GridSystem.GridToWorld(dest);
         _totalDist = (Position-_dest).Length();
@@ -39,7 +41,7 @@ public partial class PieceHighlight : Button
         _ready = true;
     }
 
-    public void Destroy()
+    public virtual void Destroy()
     {
         _disabled = true;
         Tween tween = GetTree().CreateTween();
@@ -58,13 +60,18 @@ public partial class PieceHighlight : Button
         base._Process(delta);
     }
 
+    protected virtual void SubmitSignal()
+    {
+        EmitSignal(SignalName.SubmitMove,_gridPosition);
+    }
+
     public void HandlePressed()
     {
         if(!_ready)
             return;
         _spr.Frame = 2;
         if(!_disabled)
-            EmitSignal(SignalName.SubmitMove,_gridPosition);
+            SubmitSignal();
     }
     
     public void HandleButtonDown()

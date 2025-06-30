@@ -189,30 +189,36 @@ public partial class ChessSystem : Node2D
 
     public void ActChessMove(Vector2I from, Vector2I to)
     {
-        
         PieceInstance instance = _pieceLayer[from.X][from.Y];
         if (instance == null)
             ///////////////////THIS SHOULDN'T HAPPEN//////////////////////
             return;
-
         int callerId = Multiplayer.GetRemoteSenderId();
+        
         if(instance == HighlightOwner)
         {
             instance.ClearHighlights();
             HighlightOwner = null;
         }
 
-        if (_pieceLayer[to.X][to.Y] != null)
+        if(from != to)
         {
-            if(_pieceLayer[to.X][to.Y]==HighlightOwner)
-                HighlightOwner = null;
-            _pieceLayer[to.X][to.Y].Destroy();
-        }
-        _pieceLayer[from.X][from.Y] = null;
-        _pieceLayer[to.X][to.Y] = instance;
-        _fog.UpdateFogData();
+            if (_pieceLayer[to.X][to.Y] != null)
+            {
+                if(_pieceLayer[to.X][to.Y]==HighlightOwner)
+                    HighlightOwner = null;
+                _pieceLayer[to.X][to.Y].Destroy();
+            }
+            _pieceLayer[from.X][from.Y] = null;
+            _pieceLayer[to.X][to.Y] = instance;
+            _fog.UpdateFogData();
 
-        instance.GridPosition = to;
+            instance.GridPosition = to;
+        }
+        else
+        {
+            _fog.UpdateFogData();
+        }
 
         Tween tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(() => { _fog.UpdateFog(); })).SetDelay(ACGlobal.ANIMATION_TIME_1 / 2.0);
@@ -228,6 +234,15 @@ public partial class ChessSystem : Node2D
         Vector2I from = operation.From;
         Vector2I to = operation.To;
         Vector4I param = operation.param;
+        
+        for(int i=1;i<=_groundSize.X;i++)
+            for(int j=1;j<=_groundSize.Y;j++)
+            {
+                PieceInstance instance = _pieceLayer[i][j];
+                if(instance==null || !instance.Visible)
+                    continue;
+                instance.UnknownStat = false;
+            }
         
         if(_control.Stage == TurnStage.WAITING)
         {
@@ -271,4 +286,13 @@ public partial class ChessSystem : Node2D
         }
     }
 
+    public bool IsGridKnown(Vector2I pos)
+    {
+        PieceInstance instance = _pieceLayer[pos.X][pos.Y];
+        if(instance == null)
+            return false;
+        if(_fog.CheckVisibility(pos))
+            return !instance.UnknownStat;
+        return false;
+    }
 }

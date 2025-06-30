@@ -78,6 +78,6 @@ public partial class TigerPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-
+        SkipSubmitParam();
     }
 }

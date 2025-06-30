@@ -69,6 +69,6 @@ public partial class DogPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-
+        SkipSubmitParam();
     }
 }

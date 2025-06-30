@@ -68,6 +68,6 @@ public partial class WolfPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-
+    SkipSubmitParam();
   }
 }

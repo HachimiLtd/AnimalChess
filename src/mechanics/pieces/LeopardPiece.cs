@@ -69,6 +69,6 @@ public partial class LeopardPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-
+    SkipSubmitParam();
   }
 }

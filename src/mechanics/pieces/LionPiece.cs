@@ -78,6 +78,6 @@ public partial class LionPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-
+    SkipSubmitParam();
   }
 }

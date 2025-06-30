@@ -67,6 +67,6 @@ public partial class RatPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-
+    SkipSubmitParam();
   }
 }

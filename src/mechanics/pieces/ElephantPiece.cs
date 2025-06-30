@@ -69,6 +69,6 @@ public partial class ElephantPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-
+        SkipSubmitParam();
     }
 }

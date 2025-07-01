@@ -27,3 +27,7 @@ window/stretch/scale_mode="integer"
 [dotnet]
 
 project/assembly_name="AnimalChess"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.213332, 0.213332, 0.213332, 1)

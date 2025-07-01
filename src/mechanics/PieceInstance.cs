@@ -14,6 +14,7 @@ public abstract partial class PieceInstance : Button
         SECOND,
         DETECT,
         SECOND_AFTERATTACK,
+        ATTACK,
     }
     protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
         {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
@@ -23,6 +24,7 @@ public abstract partial class PieceInstance : Button
         {HighlightType.SECOND,(PackedScene)GD.Load("res://scenes/piece_second_highlight.tscn")},
         {HighlightType.DETECT,(PackedScene)GD.Load("res://scenes/piece_detect_highlight.tscn")},
         {HighlightType.SECOND_AFTERATTACK,(PackedScene)GD.Load("res://scenes/piece_second_afterattack_highlight.tscn")},
+        {HighlightType.ATTACK,(PackedScene)GD.Load("res://scenes/piece_attack_highlight.tscn")},
     };
 
     protected ChessSystem _system;

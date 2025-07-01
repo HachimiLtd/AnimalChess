@@ -126,6 +126,11 @@ public partial class WolfHighlighter : Control
 
     private bool IsSkillAllowed(Vector2I gridPosition)
     {
-        return (!_system.IsGridVisible(gridPosition)) && (gridPosition != _wolfGridPosition);
+        return !_system.IsGridVisible(gridPosition) &&
+            gridPosition != _wolfGridPosition &&
+            (
+                (_system.PlayerRole == RoleType.P1 && gridPosition.X > _system.GroundSize.X / 2) ||
+                (_system.PlayerRole == RoleType.P2 && gridPosition.X <= _system.GroundSize.X / 2)
+            );
     }
 }

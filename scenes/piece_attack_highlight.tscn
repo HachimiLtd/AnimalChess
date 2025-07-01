@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://x62s24sjpxlm"]
+[gd_scene load_steps=4 format=3 uid="uid://x62s24sjpxlm"]
 
 [ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_4lx3q"]
 [ext_resource type="Texture2D" uid="uid://cpv3u2dklecre" path="res://assets/sprites/test_highlight_attack.png" id="2_k1msy"]
+[ext_resource type="Script" uid="uid://xc8kmfn1mxjk" path="res://src/mechanics/highlights/PieceAttackHighlight.cs" id="2_vgwox"]
 
 [node name="PieceAttackHighlight" instance=ExtResource("1_4lx3q")]
+script = ExtResource("2_vgwox")
 
 [node name="Spr" parent="." index="0"]
 texture = ExtResource("2_k1msy")

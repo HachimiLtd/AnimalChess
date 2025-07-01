@@ -3,6 +3,8 @@ using Godot;
 public partial class ElephantPiece : PieceInstance
 {
     public ElephantPiece() : base(PieceType.ELEPHANT) { }
+    private Vector4I _tempParams;
+    private bool skillUsed = false;
 
     public override void CreateHighlights()
     {
@@ -13,8 +15,35 @@ public partial class ElephantPiece : PieceInstance
     }
     private void CreateHighLightsPartial(Vector2I dest)
     {
+        _tempParams = Vector4I.Zero;
+
         int x = dest.X;
         int y = dest.Y;
+
+        if(!skillUsed && _system.GroundLayer[x][y] != GroundType.BOUNDARY)
+        {
+            Vector2I atkPos = -_gridPosition + 2*dest;
+
+#pragma warning disable CS0642 // Possible mistaken empty statement
+            if (_system.GroundLayer[atkPos.X][atkPos.Y] == GroundType.BOUNDARY ||
+                _system.GroundLayer[atkPos.X][atkPos.Y] == GroundType.FLOODED);
+#pragma warning restore CS0642 // Possible mistaken empty statement
+
+            else if( !_system.IsGridVisible(atkPos) ||
+                ( _system.PieceLayer[atkPos.X][atkPos.Y] != null &&
+                  _system.PieceLayer[atkPos.X][atkPos.Y].Player != _player &&
+                  _system.PieceLayer[atkPos.X][atkPos.Y].Type != PieceType.RAT ) )
+            {
+                PieceAttackHighlight highlight = (PieceAttackHighlight)CreateHighlight(atkPos, HighlightType.ATTACK);
+                highlight.PAHInitialize((Vector4I param)=>
+                {
+                    _tempParams = param;
+                    skillUsed = true;
+                }, _system.PieceLayer[atkPos.X][atkPos.Y] == null ||
+                   _system.PieceLayer[atkPos.X][atkPos.Y].Type == PieceType.RAT);
+            }
+        }
+
         switch (_system.GroundLayer[x][y])
         {
             case GroundType.BOUNDARY:
@@ -69,6 +98,6 @@ public partial class ElephantPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-        SkipSubmitParam();
+        HandleSubmitParam(_tempParams);
     }
 }

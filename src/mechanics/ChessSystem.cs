@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Formats.Tar;
 using Godot;
 /*
 //whether the chess piece is free to move here
@@ -263,9 +264,17 @@ public partial class ChessSystem : Node2D
         {
             PieceInstance instance = _pieceLayer[from.X][from.Y];
             ActChessMove(from,to);
+            
             if ((instance.Type == PieceType.LEOPARD || instance.Type == PieceType.LION) &&
                 param != Vector4I.Zero)
                 ActChessMove(to, new Vector2I(param.X, param.Y));
+            else if ( instance.Type == PieceType.ELEPHANT && param != Vector4I.Zero)
+            {
+                _pieceLayer[param.X][param.Y].Destroy();
+                _pieceLayer[param.X][param.Y] = null;
+                _fog.UpdateFogData();
+                _fog.UpdateFog();
+            }
             _control.SwitchStageMove();
         }
         else
@@ -286,6 +295,16 @@ public partial class ChessSystem : Node2D
                 if (param != Vector4I.Zero)
                 {
                     ActChessMove(to, new Vector2I(param.X, param.Y));
+                }
+            }
+            else if(instance.Type == PieceType.ELEPHANT)
+            {
+                if (param != Vector4I.Zero)
+                {
+                    _pieceLayer[param.X][param.Y].Destroy();
+                    _pieceLayer[param.X][param.Y] = null;
+                    _fog.UpdateFogData();
+                    _fog.UpdateFog();
                 }
             }
             Rpc(nameof(HandleOperationEncode), from, to, param);

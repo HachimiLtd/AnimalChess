@@ -67,4 +67,11 @@ public enum TurnStage
 
 public static class ACGlobal{
     public const float ANIMATION_TIME_1 = 0.15f;
+
+    public static Color GetPlayerColor(RoleType player)
+    {
+        if(player==RoleType.P2)
+            return new Color(0.8f,0.6f,1.2f);
+        return new Color(1.2f,.5f,.6f);
+    }
 }

@@ -13,17 +13,17 @@ void fragment() {
 	//COLOR.rgb *= 1.5;
 	int x = int(UV.x*float(board_width));
 	int y = int(UV.y*float(board_height));
-	float ratio = 0.18;
+	float ratio = 0.23;
 	int index = x+y*board_width;
 	if(light_status[index]==1)
 		ratio = 1.;
 	else if(light_status[index]==2)
-		ratio = .5;
+		ratio = .53;
 	else {
-		if(x>0 && light_status[index-1]==1) ratio = .4;
-		else if(y>0 && light_status[index-board_width]==1) ratio = .4;
-		else if(x<board_width-1 && light_status[index+1]==1) ratio = .4;
-		else if(y<board_height-1 && light_status[index+board_height]==1) ratio = .4;
+		if(x>0 && light_status[index-1]==1) ratio = .45;
+		else if(y>0 && light_status[index-board_width]==1) ratio = .45;
+		else if(x<board_width-1 && light_status[index+1]==1) ratio = .45;
+		else if(y<board_height-1 && light_status[index+board_height]==1) ratio = .45;
 	}
 
 	COLOR.rgb = screen_sample.rgb * ratio;

@@ -182,6 +182,7 @@ public partial class ChessSystem : Node2D
         PieceInstance instance = (PieceInstance)_resPieceInstances[type].Instantiate();
         instance.Player = player;
         instance.GridPosition = pos;
+        instance.Modulate = ACGlobal.GetPlayerColor(player);
 
         MountPieces.AddChild(instance);
         _pieceLayer[pos.X][pos.Y] = instance;

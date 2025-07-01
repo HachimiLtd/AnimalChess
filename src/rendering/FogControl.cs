@@ -72,6 +72,8 @@ public partial class FogControl : Panel
             return;
 
         int index = gridPosition.X + gridPosition.Y * sx;
+        if(_lightStatus[index]>=0)
+            return;
         _lightStatus[index] = 2;
 
         _visibilityStatus[gridPosition.X+1][gridPosition.Y+1] = true;

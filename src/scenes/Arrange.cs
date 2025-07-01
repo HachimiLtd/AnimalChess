@@ -22,8 +22,8 @@ public partial class Arrange : Node
   private DraggablePiece[][] _draggablePieces;
   public DraggablePiece[][] DraggablePieces { get { return _draggablePieces; } set { _draggablePieces = value; } }
 
-  private bool _isSelfReady = false;
-  private bool _isOpponentReady = false;
+  public bool IsSelfReady = false;
+  public bool IsOpponentReady = false;
 
   private static readonly Array<Vector2> _p1AllowedDropPositions = [
     new Vector2(0, 0), new Vector2(2, 0), new Vector2(1, 1),
@@ -141,7 +141,10 @@ public partial class Arrange : Node
     if (allPiecesPlaced)
     {
       GD.Print("All chess pieces placed. Could proceed to next stage.");
-      _doneButton.Visible = true;
+      if (!IsSelfReady)
+      {
+        _doneButton.Visible = true;
+      }
     }
   }
 
@@ -150,7 +153,7 @@ public partial class Arrange : Node
     GD.Print("Done button pressed. Proceeding to next stage.");
     _doneButton.Visible = false;
     _waitingLabel.Visible = true;
-    _isSelfReady = true;
+    IsSelfReady = true;
 
     var selfArrangements = new int[10];
     for (var i = 0; i < 10; i++)
@@ -187,14 +190,14 @@ public partial class Arrange : Node
     {
       p1Arrangements = opponentArrangements;
     }
-    _isOpponentReady = true;
+    IsOpponentReady = true;
     GD.Print("Peer is ready.");
     CheckBothPlayersReady();
   }
 
   private void CheckBothPlayersReady()
   {
-    if (_isSelfReady && _isOpponentReady)
+    if (IsSelfReady && IsOpponentReady)
     {
       GD.Print("Both players are ready. Proceeding to next stage.");
       _world.Visible = true;

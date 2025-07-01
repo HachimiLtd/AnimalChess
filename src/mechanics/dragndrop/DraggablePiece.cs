@@ -2,6 +2,7 @@ using Godot;
 
 public partial class DraggablePiece : Control
 {
+  private Arrange _arrange;
   private PieceType _type;
   public PieceType Type { get { return _type; } set { _type = value; } }
   private PackedScene _draggablePieceScene = (PackedScene)GD.Load("res://scenes/draggable_piece.tscn");
@@ -47,6 +48,8 @@ public partial class DraggablePiece : Control
   {
     _label = GetNode<Label>("Label");
     _label.Text = _TranslatePieceName(_type);
+
+    _arrange = GetTree().Root.GetNode<Arrange>("Arrange");
   }
 
   public override void _Process(double delta)
@@ -60,6 +63,11 @@ public partial class DraggablePiece : Control
 
   public override Variant _GetDragData(Vector2 atPosition)
   {
+    if (_arrange.IsSelfReady)
+    {
+      return default;
+    }
+
     DraggablePiece piece = _draggablePieceScene.Instantiate<DraggablePiece>();
     piece.Type = _type;
 

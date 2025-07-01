@@ -98,7 +98,7 @@ public partial class Wait : Control
     if (_multiplayer.IsHost && _multiplayer.GetPlayerCount() >= 2)
     {
       GD.Print("Game is ready to start!");
-      GetTree().ChangeSceneToFile("res://scenes/world.tscn");
+      GetTree().ChangeSceneToFile("res://scenes/arrange.tscn");
     }
   }
 

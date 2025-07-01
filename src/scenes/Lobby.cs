@@ -73,7 +73,7 @@ public partial class Lobby : Control
   {
     GD.Print("Successfully connected to host!");
     // Switch to game scene
-    GetTree().ChangeSceneToFile("res://scenes/world.tscn");
+    GetTree().ChangeSceneToFile("res://scenes/arrange.tscn");
   }
 
   private void OnConnectionFailed()

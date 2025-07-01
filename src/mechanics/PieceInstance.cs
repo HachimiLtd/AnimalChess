@@ -254,4 +254,14 @@ public abstract partial class PieceInstance : Button
         _type = type;
         highlights = new List<PieceHighlight>();
     }
+
+    public void SetStableModulate(Color modulate)
+    {
+        foreach(Node child in GetChildren())
+        {
+            if(child is CanvasItem){
+                ((CanvasItem)child).Modulate = modulate;
+            }
+        }
+    }
 }

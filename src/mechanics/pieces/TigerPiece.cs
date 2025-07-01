@@ -4,6 +4,8 @@ public partial class TigerPiece : PieceInstance
 {
     public TigerPiece() : base(PieceType.TIGER) { }
 
+    private bool _skillUsed = false;
+
     public override void CreateHighlights()
     {
         CreateHighLightsPartial(Vector2I.Down);
@@ -78,6 +80,23 @@ public partial class TigerPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-        SkipSubmitParam();
+        if(_skillUsed){
+            SkipSubmitParam();
+            return;
+        }
+        Vector2I tar = _gridPosition*2 - _tempLastPosition;
+        if(_system.GroundLayer[tar.X][tar.Y] == GroundType.BOUNDARY){
+            SkipSubmitParam();
+            return;
+        }
+        if(_system.PieceLayer[tar.X][tar.Y] != null){
+            SkipSubmitParam();
+            return;
+        }
+        PieceDetectHighlight highlight = (PieceDetectHighlight)CreateHighlight(tar, HighlightType.DETECT);
+        highlight.PDHInitialize(() => {
+            _skillUsed = true;
+        }, _system);
+        CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
     }
 }

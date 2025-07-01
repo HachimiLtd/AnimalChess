@@ -15,6 +15,8 @@ public enum MoveValidation
 
 public partial class ChessSystem : Node2D
 {
+    private static PackedScene _resIndicator = (PackedScene)GD.Load("res://scenes/detect_indicator.tscn");
+
     [Export]
     private PlayerStatusDisplay _playerStatusDisplayP1;
     [Export]
@@ -268,9 +270,12 @@ public partial class ChessSystem : Node2D
         else
         {
             PieceInstance instance = _pieceLayer[to.X][to.Y];
-            if(instance.Type == PieceType.WOLF){
+            if(instance.Type == PieceType.WOLF || instance.Type == PieceType.TIGER){
                 if(param != Vector4I.Zero)
                 {
+                    Node2D indicator = (Node2D)_resIndicator.Instantiate();
+                    indicator.Position = GridSystem.GridToWorld(new Vector2I(param.X, param.Y));
+                    MountHightlights.AddChild(indicator);
                     _fog.ForceSet2(new Vector2I(param.X,param.Y));
                     _fog.UpdateFog();
                 }

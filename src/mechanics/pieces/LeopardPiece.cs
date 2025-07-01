@@ -79,6 +79,13 @@ public partial class LeopardPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
+    if((_system.PlayerRole == RoleType.P1 && _gridPosition.X <= _system.GroundSize.X/2) ||
+       (_system.PlayerRole == RoleType.P2 && _gridPosition.X >  _system.GroundSize.X/2) )
+    {
+      SkipSubmitParam();
+      return;
+    }
+
     if( !IsSkillAllowedPartial(_gridPosition + Vector2I.Down) ||
         !IsSkillAllowedPartial(_gridPosition + Vector2I.Up) ||
         !IsSkillAllowedPartial(_gridPosition + Vector2I.Left) ||

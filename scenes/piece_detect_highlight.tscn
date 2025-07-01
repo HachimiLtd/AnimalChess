@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx54gja2eqey4"]
+
+[ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_myn2n"]
+[ext_resource type="Texture2D" uid="uid://bcpsfo2kvmjr7" path="res://assets/sprites/test_hightlight_dir.png" id="2_qs5rv"]
+[ext_resource type="Script" uid="uid://uem65snj7x1" path="res://src/mechanics/highlights/PieceDetectHighlight.cs" id="2_xyc7i"]
+
+[node name="PieceDetectHighlight" instance=ExtResource("1_myn2n")]
+script = ExtResource("2_xyc7i")
+
+[node name="Spr" parent="." index="0"]
+texture = ExtResource("2_qs5rv")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://csl7kd7i2jpdp"]
+
+[ext_resource type="Script" uid="uid://qkrftqe718yx" path="res://src/scenes/NestButton.cs" id="1_6qwu5"]
+[ext_resource type="Texture2D" uid="uid://dfv7qvbugn5dc" path="res://assets/sprites/test_button_nest.png" id="1_7rtfa"]
+
+[node name="NestButton" type="Button"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(48, 48)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_6qwu5")
+
+[node name="Spr" type="Sprite2D" parent="."]
+texture = ExtResource("1_7rtfa")
+centered = false
+hframes = 6

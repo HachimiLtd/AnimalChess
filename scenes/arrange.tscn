@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://ckjxn2b3g4fa0"]
+[gd_scene load_steps=17 format=4 uid="uid://dtftqgpbwo6ma"]
 
 [ext_resource type="Texture2D" uid="uid://8wv8wl2xo5hy" path="res://assets/sprites/test_ground.png" id="1_8s8m6"]
 [ext_resource type="Script" uid="uid://bejqyrk1r2opl" path="res://src/scenes/Arrange.cs" id="1_qle8j"]
 [ext_resource type="Script" uid="uid://d1ys7k25waby6" path="res://src/mechanics/dragndrop/MountPieces.cs" id="2_8s8m6"]
 [ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="2_qle8j"]
 [ext_resource type="Shader" uid="uid://jm675c0b55a6" path="res://src/rendering/fog.gdshader" id="3_w8wqt"]
+[ext_resource type="PackedScene" uid="uid://csl7kd7i2jpdp" path="res://scenes/nest_button.tscn" id="6_w8wqt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_15spc"]
 texture = ExtResource("1_8s8m6")
@@ -69,12 +70,14 @@ hue_variation_max = 0.11
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(0.2, 0.2, 0.2)
 
-[node name="Arrange" type="Node2D" node_paths=PackedStringArray("_gridContainer", "_doneButton", "_fogPanel", "_waitingLabel")]
+[node name="Arrange" type="Node2D" node_paths=PackedStringArray("_gridContainer", "_doneButton", "_fogPanel", "_waitingLabel", "_N1", "_N2")]
 script = ExtResource("1_qle8j")
 _gridContainer = NodePath("CenterContainer/HC/VC/GC")
 _doneButton = NodePath("CenterContainer/HC/VC/DoneButton")
 _fogPanel = NodePath("CenterContainer/HC/Control/FogPanel")
 _waitingLabel = NodePath("CenterContainer/HC/VC/Waiting")
+_N1 = NodePath("CenterContainer/HC/Control/N1")
+_N2 = NodePath("CenterContainer/HC/Control/N2")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(576, 576)
@@ -144,5 +147,13 @@ randomness = 0.2
 visibility_rect = Rect2(0, 0, 576, 576)
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_yl4v5")
+
+[node name="N1" parent="CenterContainer/HC/Control" node_paths=PackedStringArray("_partner") instance=ExtResource("6_w8wqt")]
+layout_mode = 0
+_partner = NodePath("../N2")
+
+[node name="N2" parent="CenterContainer/HC/Control" node_paths=PackedStringArray("_partner") instance=ExtResource("6_w8wqt")]
+layout_mode = 0
+_partner = NodePath("../N1")
 
 [connection signal="ChessPlaced" from="CenterContainer/HC/Control" to="." method="OnChessPlaced"]

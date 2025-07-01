@@ -23,6 +23,9 @@ public partial class ChessSystem : Node2D
     [Export]
     private PlayerStatusDisplay _playerStatusDisplayP2;
 
+    [Export]
+    private ResShow _resShow;
+
     // Constants for board dimensions
     private const int BOARD_WIDTH = 12;
     private const int BOARD_HEIGHT = 12;
@@ -150,7 +153,7 @@ public partial class ChessSystem : Node2D
         return arrangement;
     }
 
-    public void GameInit(ChessPieceInitialArrangement pieceArrangement, RoleType player)
+    public void GameInit(ChessPieceInitialArrangement pieceArrangement, RoleType player,NestData[] nests)
     {
         for (int i = 1; i <= _groundSize.X; i++)
             for (int j = 1; j <= _groundSize.Y; j++)
@@ -173,6 +176,20 @@ public partial class ChessSystem : Node2D
         HighlightOwner = null;
         _fog.UpdateFogData();
         _fog.UpdateFog();
+
+        if(nests==null)
+            return;
+        foreach (NestData nest in nests)
+        {
+            if (nest.IsFake)
+            {
+                _groundLayer[nest.Position.X][nest.Position.Y] = GroundType.NEST_FAKE;
+            }
+            else
+            {
+                _groundLayer[nest.Position.X][nest.Position.Y] = GroundType.NEST_REAL;
+            }
+        }
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
     {
@@ -225,6 +242,11 @@ public partial class ChessSystem : Node2D
             _fog.UpdateFogData();
 
             instance.GridPosition = to;
+
+            if(_groundLayer[to.X][to.Y] == GroundType.NEST_REAL)
+            {
+                HandleNestInvasion(to);
+            }
         }
         else
         {
@@ -256,7 +278,7 @@ public partial class ChessSystem : Node2D
         _control.SwitchStageWait(param);
     }
 
-    //////////////// TODO: Special skill effects(param) should ALWAYS be processed in this func. //////////////.
+    //////////////// Special skill effects(param) should ALWAYS be processed in this func. //////////////.
     public void HandleOperation(ChessOperation operation)
     {
         Vector2I from = operation.From;
@@ -339,6 +361,19 @@ public partial class ChessSystem : Node2D
         {
             HighlightOwner.ClearHighlights();
             HighlightOwner = null;
+        }
+    }
+
+    public void HandleNestInvasion(Vector2I position)
+    {
+        if( (position.X <= GroundSize.X/2 && PlayerRole == RoleType.P1) ||
+            (position.X > GroundSize.X/2 && PlayerRole == RoleType.P2) )
+        {
+            _resShow.ShowRes(-1);
+        }
+        else
+        {
+            _resShow.ShowRes(1);
         }
     }
 

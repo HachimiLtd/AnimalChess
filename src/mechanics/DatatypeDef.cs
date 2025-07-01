@@ -5,6 +5,8 @@ using Godot;
 public record struct ChessOperation(Vector2I From, Vector2I To, Vector4I param);
 public record struct ChessMove(Vector2I From, Vector2I To);
 
+public record struct NestData(Vector2I Position, bool IsFake);
+
 public struct ChessPieceInitialArrangement
 {
     public PieceType[][] typeMap;

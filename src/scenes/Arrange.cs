@@ -11,6 +11,10 @@ public partial class Arrange : Node
   private Panel _fogPanel;
   [Export]
   private Label _waitingLabel;
+  [Export]
+  private NestButton _N1;
+  [Export]
+  private NestButton _N2;
   private PackedScene _draggablePieceScene = (PackedScene)GD.Load("res://scenes/draggable_piece.tscn");
   private PackedScene _worldScene = (PackedScene)GD.Load("res://scenes/world.tscn");
   private World _world;
@@ -31,11 +35,17 @@ public partial class Arrange : Node
     new Vector2(2, 9), new Vector2(1, 10), new Vector2(0, 11),
     new Vector2(2, 11)
   ];
+  private static readonly Array<Vector2> _p1AllowedNestPositions = [
+    new Vector2(1,4), new Vector2(1,9),
+  ];
   private static readonly Array<Vector2> _p2AllowedDropPositions = [
     new Vector2(11, 11), new Vector2(9, 11), new Vector2(10, 10),
     new Vector2(9, 9), new Vector2(9, 7), new Vector2(9, 4),
     new Vector2(9, 2), new Vector2(10, 1), new Vector2(11, 0),
     new Vector2(9, 0)
+  ];
+  private static readonly Array<Vector2> _p2AllowedNestPositions = [
+    new Vector2(12,4), new Vector2(12,9),
   ];
 
   public Dictionary<RoleType, Array<Vector2>> AllowedDropPositions =
@@ -76,6 +86,18 @@ public partial class Arrange : Node
       }
     }
 
+    if(_player == RoleType.P1)
+    {
+      _N1.Position = GridSystem.GridToWorld((Vector2I)_p1AllowedNestPositions[0]);
+      _N2.Position = GridSystem.GridToWorld((Vector2I)_p1AllowedNestPositions[1]);
+      _N1.Selected = true;
+    }
+    else
+    {
+      _N1.Position = GridSystem.GridToWorld((Vector2I)_p2AllowedNestPositions[0]);
+      _N2.Position = GridSystem.GridToWorld((Vector2I)_p2AllowedNestPositions[1]);
+      _N2.Selected = true;
+    }
     material.SetShaderParameter("light_status", lightStatus);
   }
 
@@ -147,7 +169,8 @@ public partial class Arrange : Node
       }
     }
   }
-
+  
+  NestData _tempNestSelf, _tempNestOpponent;
   public void OnDoneButtonPressed()
   {
     GD.Print("Done button pressed. Proceeding to next stage.");
@@ -173,13 +196,19 @@ public partial class Arrange : Node
       p2Arrangements = selfArrangements;
     }
 
-    Rpc(nameof(ProcessDoneButtonPressed), selfArrangements);
+    Vector2I nestPos;
+    if(_N1.Selected)
+      nestPos = GridSystem.WorldToGrid(_N1.Position);
+    else
+      nestPos = GridSystem.WorldToGrid(_N2.Position);
+    _tempNestSelf = new NestData(nestPos, false);
+    Rpc(nameof(ProcessDoneButtonPressed), selfArrangements, nestPos);
     CheckBothPlayersReady();
   }
 
   // using rpc, notify peer on ready, when both ready, proceed to next stage
   [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-  public void ProcessDoneButtonPressed(int[] opponentArrangements)
+  public void ProcessDoneButtonPressed(int[] opponentArrangements, Vector2I nest)
   {
     GD.Print("Peer's arrangements: ", opponentArrangements.Join(","));
     if (_player == RoleType.P1)
@@ -190,6 +219,7 @@ public partial class Arrange : Node
     {
       p1Arrangements = opponentArrangements;
     }
+    _tempNestOpponent = new NestData(nest, false);
     IsOpponentReady = true;
     GD.Print("Peer is ready.");
     CheckBothPlayersReady();
@@ -219,7 +249,7 @@ public partial class Arrange : Node
         GD.Print("Row ", i, ": ", string.Join(", ", typeMap[i]));
       }
       ChessPieceInitialArrangement arrangement = _system.CreateInitialArrangement(typeMap);
-      _system.GameInit(arrangement, _player);
+      _system.GameInit(arrangement, _player,new NestData[] { _tempNestSelf, _tempNestOpponent });
       _control.SwitchStageInit();
       QueueFree();
     }

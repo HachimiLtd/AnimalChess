@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cryw7lnad8322"]
+[gd_scene load_steps=8 format=3 uid="uid://cryw7lnad8322"]
 
 [ext_resource type="Script" uid="uid://brrrg4x560gaq" path="res://src/scenes/World.cs" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://b4ck7qv1yal3h" path="res://scenes/chess_system.tscn" id="2_4wyf3"]
 [ext_resource type="Texture2D" uid="uid://cwk6egag88iyg" path="res://assets/sprites/test_status_banner.png" id="2_k0juu"]
 [ext_resource type="Script" uid="uid://cmsq47i7ytxht" path="res://src/rendering/PlayerStatusDisplay.cs" id="3_71j4m"]
+[ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="5_71j4m"]
+[ext_resource type="Script" uid="uid://dd0x7cth0gjg3" path="res://src/scenes/ResShow.cs" id="5_qfnet"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfnet"]
+bg_color = Color(0.0562916, 0.0562916, 0.0562916, 1)
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_rwgxs")
@@ -44,9 +49,10 @@ script = ExtResource("3_71j4m")
 custom_minimum_size = Vector2(576, 576)
 layout_mode = 2
 
-[node name="ChessSystem" parent="CenterContainer/HBoxContainer/Control" node_paths=PackedStringArray("_playerStatusDisplayP1", "_playerStatusDisplayP2") instance=ExtResource("2_4wyf3")]
+[node name="ChessSystem" parent="CenterContainer/HBoxContainer/Control" node_paths=PackedStringArray("_playerStatusDisplayP1", "_playerStatusDisplayP2", "_resShow") instance=ExtResource("2_4wyf3")]
 _playerStatusDisplayP1 = NodePath("../../CenterContainer2/Control2/Sprite2D")
 _playerStatusDisplayP2 = NodePath("../../CenterContainer/Control2/Sprite2D")
+_resShow = NodePath("../../../../ResShow")
 
 [node name="CenterContainer" type="CenterContainer" parent="CenterContainer/HBoxContainer"]
 layout_mode = 2
@@ -60,3 +66,49 @@ texture = ExtResource("2_k0juu")
 centered = false
 hframes = 3
 script = ExtResource("3_71j4m")
+
+[node name="ResShow" type="Window" parent="."]
+initial_position = 1
+size = Vector2i(320, 128)
+visible = false
+unresizable = true
+borderless = true
+popup_window = true
+script = ExtResource("5_qfnet")
+
+[node name="Panel" type="Panel" parent="ResShow"]
+offset_right = 320.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qfnet")
+
+[node name="Lwin" type="Label" parent="ResShow"]
+visible = false
+offset_right = 320.0
+offset_bottom = 128.0
+theme = ExtResource("5_71j4m")
+theme_override_font_sizes/font_size = 48
+text = "YOU WON!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Llose" type="Label" parent="ResShow"]
+visible = false
+modulate = Color(1, 0.47, 0.47, 1)
+offset_right = 320.0
+offset_bottom = 128.0
+theme = ExtResource("5_71j4m")
+theme_override_font_sizes/font_size = 48
+text = "YOU LOST..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Lerr" type="Label" parent="ResShow"]
+visible = false
+offset_right = 320.0
+offset_bottom = 128.0
+theme = ExtResource("5_71j4m")
+theme_override_font_sizes/font_size = 48
+text = "--ERR--
+* Lost Track *"
+horizontal_alignment = 1
+vertical_alignment = 1

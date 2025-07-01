@@ -26,7 +26,10 @@ public partial class LeopardPiece : PieceInstance
           if (instance.Player == _player)
             return;
         }
-        CreateHighlight(dest);
+        if(paramMode)
+          CreateHighlight(dest, HighlightType.SECOND);
+        else
+          CreateHighlight(dest);
         return;
       case GroundType.FLOODED:
         return;

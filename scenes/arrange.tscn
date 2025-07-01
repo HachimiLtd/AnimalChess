@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dtftqgpbwo6ma"]
+[gd_scene load_steps=23 format=4 uid="uid://dtftqgpbwo6ma"]
 
 [ext_resource type="Texture2D" uid="uid://8wv8wl2xo5hy" path="res://assets/sprites/test_ground.png" id="1_8s8m6"]
 [ext_resource type="Script" uid="uid://bejqyrk1r2opl" path="res://src/scenes/Arrange.cs" id="1_qle8j"]
@@ -6,6 +6,55 @@
 [ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="2_qle8j"]
 [ext_resource type="Shader" uid="uid://jm675c0b55a6" path="res://src/rendering/fog.gdshader" id="3_w8wqt"]
 [ext_resource type="PackedScene" uid="uid://csl7kd7i2jpdp" path="res://scenes/nest_button.tscn" id="6_w8wqt"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m1txw"]
+animation = &"hint_animation"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v4vd8"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_w8wqt"]
+states/Start/position = Vector2(170.667, 88.6667)
+states/hint_animation/node = SubResource("AnimationNodeAnimation_m1txw")
+states/hint_animation/position = Vector2(577.333, 88.963)
+transitions = ["Start", "hint_animation", SubResource("AnimationNodeStateMachineTransition_v4vd8")]
+
+[sub_resource type="Animation" id="Animation_v4vd8"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_m1txw"]
+resource_name = "hint_animation"
+length = 0.8
+loop_mode = 2
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.2, 0, 0.25, -0.0215418, 0.2, -0.15, 0.0360024, 0, 0),
+"times": PackedFloat32Array(0.1, 0.8)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2tt6m"]
+_data = {
+&"RESET": SubResource("Animation_v4vd8"),
+&"hint_animation": SubResource("Animation_m1txw")
+}
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_15spc"]
 texture = ExtResource("1_8s8m6")
@@ -79,6 +128,17 @@ _waitingLabel = NodePath("CenterContainer/HC/VC/Waiting")
 _N1 = NodePath("CenterContainer/HC/Control/N1")
 _N2 = NodePath("CenterContainer/HC/Control/N2")
 
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../CenterContainer/HC/VC/Waiting")
+tree_root = SubResource("AnimationNodeStateMachine_w8wqt")
+anim_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+root_node = NodePath("../../CenterContainer/HC/VC/Waiting")
+libraries = {
+&"": SubResource("AnimationLibrary_2tt6m")
+}
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(576, 576)
 offset_right = 576.0
@@ -108,6 +168,7 @@ layout_mode = 2
 theme = ExtResource("2_qle8j")
 text = "Waiting..."
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Spacer" type="Control" parent="CenterContainer/HC"]
 custom_minimum_size = Vector2(20, 0)
@@ -150,10 +211,14 @@ process_material = SubResource("ParticleProcessMaterial_yl4v5")
 
 [node name="N1" parent="CenterContainer/HC/Control" node_paths=PackedStringArray("_partner") instance=ExtResource("6_w8wqt")]
 layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
 _partner = NodePath("../N2")
 
 [node name="N2" parent="CenterContainer/HC/Control" node_paths=PackedStringArray("_partner") instance=ExtResource("6_w8wqt")]
 layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
 _partner = NodePath("../N1")
 
 [connection signal="ChessPlaced" from="CenterContainer/HC/Control" to="." method="OnChessPlaced"]

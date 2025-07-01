@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://x62s24sjpxlm"]
+
+[ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_4lx3q"]
+[ext_resource type="Texture2D" uid="uid://cpv3u2dklecre" path="res://assets/sprites/test_highlight_attack.png" id="2_k1msy"]
+
+[node name="PieceAttackHighlight" instance=ExtResource("1_4lx3q")]
+
+[node name="Spr" parent="." index="0"]
+texture = ExtResource("2_k1msy")

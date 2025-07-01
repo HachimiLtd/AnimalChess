@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxf8gav41cilv"]
+
+[ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_cxjsk"]
+[ext_resource type="Script" uid="uid://burb7lqd8cg7x" path="res://src/mechanics/highlights/PieceCancelHighlight.cs" id="2_7l8ms"]
+[ext_resource type="Texture2D" uid="uid://cfqctwtc4cd12" path="res://assets/sprites/test_hightlight_cancel.png" id="2_jdbam"]
+
+[node name="PieceCancelHighlight" instance=ExtResource("1_cxjsk")]
+script = ExtResource("2_7l8ms")
+
+[node name="Spr" parent="." index="0"]
+modulate = Color(1, 1, 1, 1)
+texture = ExtResource("2_jdbam")

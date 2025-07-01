@@ -11,12 +11,6 @@ public partial class PiecePseudoHighlight : PieceHighlight
         tween.TweenProperty(this,"modulate",new Color(1.0f,1.0f,1.0f,.0f),0.05).SetDelay(0.085);
         tween.TweenCallback(Callable.From(QueueFree)).SetDelay(0.135);
     }
-
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-    }
-
     protected override void SubmitSignal()
     {
         EmitSignal(SignalName.SubmitMove,_initPosition);

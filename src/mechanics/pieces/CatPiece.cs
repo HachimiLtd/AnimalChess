@@ -24,12 +24,10 @@ public partial class CatPiece : PieceInstance
                 if (_system.PieceLayer[x][y] != null)
                 {
                     PieceInstance instance = _system.PieceLayer[x][y];
-                    if (instance.Player == _player)
+                    if (instance.Player == _player || instance.Type == PieceType.DOG)
                         return;
                 }
                 CreateHighlight(dest);
-                return;
-            case GroundType.FLOODED:
                 return;
             case GroundType.NEST:
             case GroundType.NEST_REAL:
@@ -44,6 +42,7 @@ public partial class CatPiece : PieceInstance
                 }
                 CreateHighlight(dest);
                 return;
+            case GroundType.FLOODED:
             default:
                 if (_system.PieceLayer[x][y] != null)
                 {

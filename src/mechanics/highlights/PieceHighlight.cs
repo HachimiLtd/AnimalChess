@@ -67,11 +67,6 @@ public partial class PieceHighlight : Button
         _spr = (Sprite2D)GetNode("Spr");
     }
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-    }
-
     protected virtual void SubmitSignal()
     {
         EmitSignal(SignalName.SubmitMove,_gridPosition);

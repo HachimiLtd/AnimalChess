@@ -9,10 +9,14 @@ public abstract partial class PieceInstance : Button
         ERROR,
         NORMAL,
         PSEUDO,
+        RAT_TELE,
+        PARAM_CANCEL,
     }
     protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
         {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
-        {HighlightType.PSEUDO,(PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn")}
+        {HighlightType.PSEUDO,(PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn")},
+        {HighlightType.RAT_TELE,(PackedScene)GD.Load("res://scenes/piece_rat_tele_highlight.tscn")},
+        {HighlightType.PARAM_CANCEL,(PackedScene)GD.Load("res://scenes/piece_cancel_highlight.tscn")},
     };
 
     protected ChessSystem _system;
@@ -110,9 +114,9 @@ public abstract partial class PieceInstance : Button
     
     public abstract void UpdateDisplay();
 
-    //public abstract void CreateSpecialHighlights();
+    public virtual void ClearAdditionalParamHighlights(){}
 
-    protected void CreateHighlight(Vector2I at,HighlightType type = HighlightType.NORMAL)
+    protected PieceHighlight CreateHighlight(Vector2I at,HighlightType type = HighlightType.NORMAL)
     {
         _system.HighlightOwner = this;
         PieceHighlight highlight = (PieceHighlight)_resHightlights[type].Instantiate();
@@ -122,6 +126,7 @@ public abstract partial class PieceInstance : Button
         highlight.Initialize(_gridPosition,at);
         highlight.SubmitMove += HandleSubmitMove;
         highlight.SubmitParam += HandleSubmitParam;
+        return highlight;
     }
 
     public void ClearHighlights()

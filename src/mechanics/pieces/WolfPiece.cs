@@ -68,6 +68,12 @@ public partial class WolfPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-    SkipSubmitParam();
+    CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
+  }
+
+  public override void ClearAdditionalParamHighlights()
+  {
+      base.ClearAdditionalParamHighlights();
+      
   }
 }

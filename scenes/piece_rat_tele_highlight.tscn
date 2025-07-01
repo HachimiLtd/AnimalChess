@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_rn34l"]
 [ext_resource type="Script" uid="uid://c6314y2ujkqoe" path="res://src/mechanics/highlights/PieceRatTeleHighlight.cs" id="2_fa6uj"]
-[ext_resource type="Texture2D" uid="uid://bv1cdww302q6l" path="res://assets/sprites/test_hightlight_skillonce.png" id="3_qnpgc"]
+[ext_resource type="Texture2D" uid="uid://bv1cdww302q6l" path="res://assets/sprites/test_highlight_skillonce.png" id="3_qnpgc"]
 
 [node name="PieceRatTeleHighlight" instance=ExtResource("1_rn34l")]
 script = ExtResource("2_fa6uj")

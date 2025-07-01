@@ -57,6 +57,7 @@ public partial class ChessSystem : Node2D
     private ChessBoard _chessBoard;
     private FogControl _fog;
     private ChessProcessControl _control;
+    public ChessProcessControl Control { get { return _control; } set { _control = value; } }
     public Node2D MountHightlights;
     public Node2D MountPieces;
 
@@ -93,27 +94,27 @@ public partial class ChessSystem : Node2D
         _control.PlayerStatusDisplayP1 = _playerStatusDisplayP1;
         _control.PlayerStatusDisplayP2 = _playerStatusDisplayP2;
 
+        // ChessPieceInitialArrangement arr = CreateInitialArrangement();
+        // RoleType role = IsMultiplayerAuthority() ? RoleType.P1 : RoleType.P2;
+        // GD.Print(role);
 
-        ChessPieceInitialArrangement arr = CreateInitialArrangement();
-        RoleType role = IsMultiplayerAuthority() ? RoleType.P1 : RoleType.P2;
-        GD.Print(role);
-
-        GameInit(arr, role);
+        // GameInit(arr, role);
     }
 
-    private ChessPieceInitialArrangement CreateInitialArrangement()
+    public ChessPieceInitialArrangement CreateInitialArrangement(PieceType[][] typeMap)
     {
         var arrangement = new ChessPieceInitialArrangement();
 
-        arrangement.typeMap = new PieceType[BOARD_HEIGHT][];
-        for (int i = 0; i < BOARD_HEIGHT; i++)
-        {
-            arrangement.typeMap[i] = new PieceType[BOARD_WIDTH];
-            for (int j = 0; j < BOARD_WIDTH; j++)
-            {
-                arrangement.typeMap[i][j] = PieceType.EMPTY;
-            }
-        }
+        arrangement.typeMap = typeMap;
+        // new PieceType[BOARD_HEIGHT][];
+        // for (int i = 0; i < BOARD_HEIGHT; i++)
+        // {
+        //     arrangement.typeMap[i] = new PieceType[BOARD_WIDTH];
+        //     for (int j = 0; j < BOARD_WIDTH; j++)
+        //     {
+        //         arrangement.typeMap[i][j] = PieceType.EMPTY;
+        //     }
+        // }
 
         for (int i = 0; i < BOARD_HEIGHT; i++)
         {
@@ -124,27 +125,27 @@ public partial class ChessSystem : Node2D
         }
         arrangement.roleMap = _roleArrangement;
 
-        arrangement.typeMap[0][0] = PieceType.WOLF;
-        arrangement.typeMap[2][0] = PieceType.LION;
-        arrangement.typeMap[1][1] = PieceType.DOG;
-        arrangement.typeMap[2][2] = PieceType.RAT;
-        arrangement.typeMap[2][4] = PieceType.LEOPARD;
-        arrangement.typeMap[2][7] = PieceType.CAT;
-        arrangement.typeMap[2][9] = PieceType.ELEPHANT;
-        arrangement.typeMap[1][10] = PieceType.DOG;
-        arrangement.typeMap[0][11] = PieceType.WOLF;
-        arrangement.typeMap[2][11] = PieceType.TIGER;
-        // and the corresponding ones on the other side
-        arrangement.typeMap[11][11] = PieceType.WOLF;
-        arrangement.typeMap[9][11] = PieceType.LION;
-        arrangement.typeMap[10][10] = PieceType.DOG;
-        arrangement.typeMap[9][9] = PieceType.RAT;
-        arrangement.typeMap[9][7] = PieceType.LEOPARD;
-        arrangement.typeMap[9][4] = PieceType.CAT;
-        arrangement.typeMap[9][2] = PieceType.ELEPHANT;
-        arrangement.typeMap[10][1] = PieceType.DOG;
-        arrangement.typeMap[11][0] = PieceType.WOLF;
-        arrangement.typeMap[9][0] = PieceType.TIGER;
+        // arrangement.typeMap[0][0] = PieceType.WOLF;
+        // arrangement.typeMap[2][0] = PieceType.LION;
+        // arrangement.typeMap[1][1] = PieceType.DOG;
+        // arrangement.typeMap[2][2] = PieceType.RAT;
+        // arrangement.typeMap[2][4] = PieceType.LEOPARD;
+        // arrangement.typeMap[2][7] = PieceType.CAT;
+        // arrangement.typeMap[2][9] = PieceType.ELEPHANT;
+        // arrangement.typeMap[1][10] = PieceType.DOG;
+        // arrangement.typeMap[0][11] = PieceType.WOLF;
+        // arrangement.typeMap[2][11] = PieceType.TIGER;
+        // // and the corresponding ones on the other side
+        // arrangement.typeMap[11][11] = PieceType.WOLF;
+        // arrangement.typeMap[9][11] = PieceType.LION;
+        // arrangement.typeMap[10][10] = PieceType.DOG;
+        // arrangement.typeMap[9][9] = PieceType.RAT;
+        // arrangement.typeMap[9][7] = PieceType.LEOPARD;
+        // arrangement.typeMap[9][4] = PieceType.CAT;
+        // arrangement.typeMap[9][2] = PieceType.ELEPHANT;
+        // arrangement.typeMap[10][1] = PieceType.DOG;
+        // arrangement.typeMap[11][0] = PieceType.WOLF;
+        // arrangement.typeMap[9][0] = PieceType.TIGER;
 
         return arrangement;
     }
@@ -172,7 +173,6 @@ public partial class ChessSystem : Node2D
         HighlightOwner = null;
         _fog.UpdateFogData();
         _fog.UpdateFog();
-        _control.GameInit();
     }
     private void CreatePieceInstance(Vector2I pos, RoleType player, PieceType type)
     {
@@ -198,7 +198,9 @@ public partial class ChessSystem : Node2D
 
     public void ActChessMove(Vector2I from, Vector2I to)
     {
+        GD.Print(PlayerRole, ": Acting chess move from ", from, " to ", to);
         PieceInstance instance = _pieceLayer[from.X][from.Y];
+        GD.Print(PlayerRole, ": Instance: ", instance.Type);
         if (instance == null)
             ///////////////////THIS SHOULDN'T HAPPEN//////////////////////
             return;

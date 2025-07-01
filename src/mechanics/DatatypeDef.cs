@@ -55,6 +55,7 @@ public enum EndingType
 public enum TurnStage
 {
     INITWAIT,
+    ARRANGEWAIT,
     INIT,
     LOOPHEAD,
     MOVE_DECISION,

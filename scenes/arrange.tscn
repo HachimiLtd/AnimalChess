@@ -1,0 +1,148 @@
+[gd_scene load_steps=16 format=4 uid="uid://ckjxn2b3g4fa0"]
+
+[ext_resource type="Texture2D" uid="uid://8wv8wl2xo5hy" path="res://assets/sprites/test_ground.png" id="1_8s8m6"]
+[ext_resource type="Script" uid="uid://bejqyrk1r2opl" path="res://src/scenes/Arrange.cs" id="1_qle8j"]
+[ext_resource type="Script" uid="uid://d1ys7k25waby6" path="res://src/mechanics/dragndrop/MountPieces.cs" id="2_8s8m6"]
+[ext_resource type="Theme" uid="uid://c8mqv2gg800xa" path="res://default_theme.tres" id="2_qle8j"]
+[ext_resource type="Shader" uid="uid://jm675c0b55a6" path="res://src/rendering/fog.gdshader" id="3_w8wqt"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_15spc"]
+texture = ExtResource("1_8s8m6")
+texture_region_size = Vector2i(48, 48)
+0:0/0 = 0
+0:0/0/custom_data_0 = "NORMAL"
+1:0/0 = 0
+1:0/0/custom_data_0 = "FLOODED"
+2:0/0 = 0
+2:0/0/custom_data_0 = "NEST"
+3:0/0 = 0
+3:0/0/custom_data_0 = "TRAP"
+
+[sub_resource type="TileSet" id="TileSet_ljqaa"]
+tile_size = Vector2i(48, 48)
+custom_data_layer_0/name = "GroundType"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_15spc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ix1ge"]
+shader = ExtResource("3_w8wqt")
+shader_parameter/light_status = PackedInt32Array(1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/board_height = 12
+shader_parameter/board_width = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_genvy"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_48wlx"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_rk8x6"]
+interpolation_mode = 2
+colors = PackedColorArray(0.332349, 0.332349, 0.332349, 1, 0.761802, 0.761802, 0.761802, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4jcte"]
+gradient = SubResource("Gradient_rk8x6")
+
+[sub_resource type="Gradient" id="Gradient_h8m6a"]
+offsets = PackedFloat32Array(0, 0.31746, 0.677249, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5pndn"]
+gradient = SubResource("Gradient_h8m6a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yl4v5"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(288, 288, 0)
+emission_shape = 3
+emission_box_extents = Vector3(288, 288, 1)
+spread = 180.0
+initial_velocity_min = 0.3
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+scale_min = 1.5
+scale_max = 2.0
+color = Color(0.54, 0.816, 1, 1)
+color_ramp = SubResource("GradientTexture1D_5pndn")
+color_initial_ramp = SubResource("GradientTexture1D_4jcte")
+hue_variation_min = -2.23517e-08
+hue_variation_max = 0.11
+turbulence_enabled = true
+turbulence_noise_speed = Vector3(0.2, 0.2, 0.2)
+
+[node name="Arrange" type="Node2D" node_paths=PackedStringArray("_gridContainer", "_doneButton", "_fogPanel", "_waitingLabel")]
+script = ExtResource("1_qle8j")
+_gridContainer = NodePath("CenterContainer/HC/VC/GC")
+_doneButton = NodePath("CenterContainer/HC/VC/DoneButton")
+_fogPanel = NodePath("CenterContainer/HC/Control/FogPanel")
+_waitingLabel = NodePath("CenterContainer/HC/VC/Waiting")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(576, 576)
+offset_right = 576.0
+offset_bottom = 576.0
+
+[node name="HC" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="VC" type="VBoxContainer" parent="CenterContainer/HC"]
+layout_mode = 2
+
+[node name="GC" type="GridContainer" parent="CenterContainer/HC/VC"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="DoneButton" type="Button" parent="CenterContainer/HC/VC"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_qle8j")
+text = "Done"
+
+[node name="Waiting" type="Label" parent="CenterContainer/HC/VC"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_qle8j")
+text = "Waiting..."
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/HC"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CenterContainer/HC" node_paths=PackedStringArray("_arrange")]
+custom_minimum_size = Vector2(576, 576)
+layout_mode = 2
+script = ExtResource("2_8s8m6")
+_arrange = NodePath("../../..")
+
+[node name="ChessBoard" type="TileMapLayer" parent="CenterContainer/HC/Control"]
+z_index = -1
+tile_map_data = PackedByteArray("AAAAAAEAAAAAAAAAAAAAAAIAAAADAAAAAAAAAAMAAAACAAAAAAAAAAQAAAADAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAADAAAAAAAAAAgAAAACAAAAAAAAAAkAAAADAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAADAAAAAAABAAQAAAAAAAAAAAABAAUAAAABAAAAAAABAAYAAAABAAAAAAABAAcAAAAAAAAAAAABAAgAAAADAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAABAAsAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAABAAAAAAACAAYAAAABAAAAAAACAAcAAAAAAAAAAAACAAgAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAACAAsAAAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAADAAYAAAAAAAAAAAADAAcAAAAAAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAABAAAAAAAEAAMAAAABAAAAAAAEAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAEAAYAAAAAAAAAAAAEAAcAAAAAAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAAAAAAAAAAEAAsAAAAAAAAAAAAFAAAAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAABAAAAAAAFAAMAAAABAAAAAAAFAAQAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAYAAAAAAAAAAAAFAAcAAAAAAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAAAAAAGAAIAAAABAAAAAAAGAAMAAAABAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAGAAYAAAAAAAAAAAAGAAcAAAAAAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAAAAAAAAAAGAAsAAAAAAAAAAAAHAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAAAAAAAAAAIAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAAAAAAAAAAIAAcAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAAAAAAAAAAIAAsAAAAAAAAAAAAJAAAAAAAAAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAABAAAAAAAJAAYAAAABAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAJAAsAAAAAAAAAAAAKAAAAAAAAAAAAAAAKAAEAAAAAAAAAAAAKAAIAAAAAAAAAAAAKAAMAAAADAAAAAAAKAAQAAAAAAAAAAAAKAAUAAAABAAAAAAAKAAYAAAABAAAAAAAKAAcAAAAAAAAAAAAKAAgAAAADAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAAAAAAAAAAKAAsAAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAADAAAAAAALAAMAAAACAAAAAAALAAQAAAADAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAADAAAAAAALAAgAAAACAAAAAAALAAkAAAADAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_ljqaa")
+collision_enabled = false
+navigation_enabled = false
+
+[node name="ChessMount" type="Node2D" parent="CenterContainer/HC/Control"]
+
+[node name="FogPanel" type="Panel" parent="CenterContainer/HC/Control"]
+clip_children = 2
+material = SubResource("ShaderMaterial_ix1ge")
+custom_minimum_size = Vector2(576, 576)
+layout_mode = 2
+offset_right = 576.0
+offset_bottom = 576.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_genvy")
+
+[node name="Particles" type="GPUParticles2D" parent="CenterContainer/HC/Control/FogPanel"]
+material = SubResource("CanvasItemMaterial_48wlx")
+amount = 128
+lifetime = 25.0
+preprocess = 10.0
+randomness = 0.2
+visibility_rect = Rect2(0, 0, 576, 576)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_yl4v5")
+
+[connection signal="ChessPlaced" from="CenterContainer/HC/Control" to="." method="OnChessPlaced"]

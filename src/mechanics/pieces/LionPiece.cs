@@ -4,6 +4,8 @@ public partial class LionPiece : PieceInstance
 {
   public LionPiece() : base(PieceType.LION) { }
 
+  private bool _skillUsed = false;
+  
   public override void CreateHighlights()
   {
     CreateHighLightsPartial(Vector2I.Down);
@@ -26,7 +28,7 @@ public partial class LionPiece : PieceInstance
           if (instance.Player == _player)
             return;
         }
-        CreateHighlight(_gridPosition + offset);
+        CreateHighlightsAtomic(_gridPosition + offset, type);
         return;
       case GroundType.FLOODED:
         if (_system.PieceLayer[x][y] != null)
@@ -50,7 +52,7 @@ public partial class LionPiece : PieceInstance
           if (instance.Player == _player)
             return;
         }
-        CreateHighlight(_gridPosition + offset);
+        CreateHighlightsAtomic(_gridPosition + offset, type);
         return;
       default:
         if (_system.PieceLayer[x][y] != null)
@@ -62,12 +64,34 @@ public partial class LionPiece : PieceInstance
             return;
           if (!_system.IsGridKnown(_gridPosition + offset) && instance.Type > _type)
           {
-            CreateHighlight(_gridPosition + offset, HighlightType.PSEUDO);
+            CreateHighlightsAtomic(_gridPosition + offset, type, true);
             return;
           }
         }
-        CreateHighlight(_gridPosition + offset);
+        CreateHighlightsAtomic(_gridPosition + offset, type);
         return;
+    }
+  }
+
+  private void CreateHighlightsAtomic( Vector2I pos, HighlightType type, bool pseudo = false)
+  {
+    if(type == HighlightType.NORMAL)
+    {
+      if(pseudo)
+        CreateHighlight(pos, HighlightType.PSEUDO);
+      else
+        CreateHighlight(pos);
+    }
+    else if(type == HighlightType.SECOND_AFTERATTACK)
+    {
+      PieceSecondAfterattackHighlight highlight = (PieceSecondAfterattackHighlight)CreateHighlight(pos, HighlightType.SECOND_AFTERATTACK);
+      highlight.PSAHInitialize(() => {
+        _skillUsed = true;
+      }, pseudo);
+    }
+    else
+    {
+      CreateHighlight(pos, type);
     }
   }
 
@@ -78,6 +102,16 @@ public partial class LionPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-    SkipSubmitParam();
+    if (_skillUsed || !_tempCapturedPiece)
+    {
+      SkipSubmitParam();
+      return;
+    }
+    
+    CreateHighlight(_gridPosition,HighlightType.PARAM_CANCEL);
+    CreateHighLightsPartial(Vector2I.Down, HighlightType.SECOND_AFTERATTACK);
+    CreateHighLightsPartial(Vector2I.Up, HighlightType.SECOND_AFTERATTACK);
+    CreateHighLightsPartial(Vector2I.Left, HighlightType.SECOND_AFTERATTACK);
+    CreateHighLightsPartial(Vector2I.Right, HighlightType.SECOND_AFTERATTACK);
   }
 }

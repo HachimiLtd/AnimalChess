@@ -84,17 +84,21 @@ public partial class TigerPiece : PieceInstance
             SkipSubmitParam();
             return;
         }
-        Vector2I tar = _gridPosition*2 - _tempLastPosition;
-        if(_system.GroundLayer[tar.X][tar.Y] == GroundType.BOUNDARY){
+        Vector2I offset = (_gridPosition - _tempLastPosition).Clamp(-1, 1);
+        Vector2I tar = _gridPosition + offset;
+        Vector2I chkBorder = _gridPosition + offset*2;
+        if (_system.GroundLayer[tar.X][tar.Y] == GroundType.BOUNDARY || 
+            _system.GroundLayer[chkBorder.X][chkBorder.Y] == GroundType.BOUNDARY){
             SkipSubmitParam();
             return;
         }
-        if(_system.PieceLayer[tar.X][tar.Y] != null){
+        if (_system.PieceLayer[tar.X][tar.Y] != null){
             SkipSubmitParam();
             return;
         }
         PieceDetectHighlight highlight = (PieceDetectHighlight)CreateHighlight(tar, HighlightType.DETECT);
-        highlight.PDHInitialize(() => {
+        highlight.PDHInitialize(() =>
+        {
             _skillUsed = true;
         }, _system);
         CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);

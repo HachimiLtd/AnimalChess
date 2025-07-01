@@ -22,9 +22,9 @@ public partial class PieceDetectHighlight : PieceHighlight
             sprite.Rotation = -Mathf.Pi / 2;
             sprite.Position = new Vector2(0,GridSystem.GridSize.Y);
         }
-        else if (dir.Y>0)
+        else if (dir.Y<0)
             sprite.Rotation = 0;
-        else if (dir.Y<0){
+        else if (dir.Y>0){
             sprite.Rotation = Mathf.Pi;
             sprite.Position = new Vector2(GridSystem.GridSize.X,GridSystem.GridSize.Y);
         }

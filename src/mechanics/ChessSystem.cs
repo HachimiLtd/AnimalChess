@@ -263,7 +263,8 @@ public partial class ChessSystem : Node2D
         {
             PieceInstance instance = _pieceLayer[from.X][from.Y];
             ActChessMove(from,to);
-            if(instance.Type == PieceType.LEOPARD && param != Vector4I.Zero)
+            if ((instance.Type == PieceType.LEOPARD || instance.Type == PieceType.LION) &&
+                param != Vector4I.Zero)
                 ActChessMove(to, new Vector2I(param.X, param.Y));
             _control.SwitchStageMove();
         }
@@ -280,7 +281,8 @@ public partial class ChessSystem : Node2D
                     _fog.UpdateFog();
                 }
             }
-            else if(instance.Type == PieceType.LEOPARD){
+            else if(instance.Type == PieceType.LEOPARD || 
+                    instance.Type == PieceType.LION){
                 if (param != Vector4I.Zero)
                 {
                     ActChessMove(to, new Vector2I(param.X, param.Y));

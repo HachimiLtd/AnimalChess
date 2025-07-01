@@ -13,6 +13,7 @@ public abstract partial class PieceInstance : Button
         PARAM_CANCEL,
         SECOND,
         DETECT,
+        SECOND_AFTERATTACK,
     }
     protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
         {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
@@ -21,6 +22,7 @@ public abstract partial class PieceInstance : Button
         {HighlightType.PARAM_CANCEL,(PackedScene)GD.Load("res://scenes/piece_cancel_highlight.tscn")},
         {HighlightType.SECOND,(PackedScene)GD.Load("res://scenes/piece_second_highlight.tscn")},
         {HighlightType.DETECT,(PackedScene)GD.Load("res://scenes/piece_detect_highlight.tscn")},
+        {HighlightType.SECOND_AFTERATTACK,(PackedScene)GD.Load("res://scenes/piece_second_afterattack_highlight.tscn")},
     };
 
     protected ChessSystem _system;
@@ -111,6 +113,10 @@ public abstract partial class PieceInstance : Button
     private CanvasItem _animalSpr;
     private CanvasItem _markSpr;
 
+    //Temp: Between SubmitMove and SubmitParam
+    protected Vector2I _tempLastPosition = Vector2I.Zero;
+    protected bool _tempCapturedPiece = false;
+
     public abstract void CreateHighlights();
     public abstract void CreateParamHighlights();
         //Use CreateHighlight to create special PieceHighlight that emits SubmitParam signal
@@ -164,11 +170,14 @@ public abstract partial class PieceInstance : Button
 
 
     //Interact with ChessSystem
-    protected Vector2I _tempLastPosition = Vector2I.Zero;
     public void HandleSubmitMove(Vector2I dest)
     {
         ClearHighlights();
         _tempLastPosition = _gridPosition;
+        if (_system.PieceLayer[dest.X][dest.Y] != null)
+            _tempCapturedPiece = true;
+        else
+            _tempCapturedPiece = false;
         _system.HandleChessMove(new ChessMove(_gridPosition,dest));
     }
 

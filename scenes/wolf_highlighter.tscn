@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://pljaepqql6al"]
 
 [ext_resource type="Script" uid="uid://bj63qsc5fi1xu" path="res://src/mechanics/highlights/WolfHighlighter.cs" id="1_ra5tc"]
-[ext_resource type="Texture2D" uid="uid://drdonrnoce17m" path="res://assets/sprites/test_hightlight_check.png" id="2_ra5tc"]
+[ext_resource type="Texture2D" uid="uid://drdonrnoce17m" path="res://assets/sprites/test_highlight_check.png" id="2_ra5tc"]
 
 [node name="WolfHighlighter" type="Control"]
 layout_mode = 3

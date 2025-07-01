@@ -44,8 +44,7 @@ public partial class FogControl : Panel
             for(int j=0;j<sy;j++)
                 if(_system.PieceLayer[i+1][j+1]!=null)
                     _visibilityStatus[i+1][j+1] = DecidePieceVisibility(
-                        i+j*sx, _system.PieceLayer[i+1][j+1], 
-                        i, j, sx, sy);
+                        i+j*sx, i, j, sx, sy);
     }
     public void UpdateFog()
     {
@@ -64,12 +63,36 @@ public partial class FogControl : Panel
                     }
     }
 
+    public void ForceSet2(Vector2I gridPosition)
+    {
+        gridPosition -= new Vector2I(1,1);
+        int sx = _system.GroundSize.X;
+        int sy = _system.GroundSize.Y;
+        if(gridPosition.X<0 || gridPosition.X>=sx || gridPosition.Y<0 || gridPosition.Y>=sy)
+            return;
+
+        int index = gridPosition.X + gridPosition.Y * sx;
+        _lightStatus[index] = 2;
+
+        _visibilityStatus[gridPosition.X+1][gridPosition.Y+1] = true;
+    }
+
     public bool CheckVisibility(Vector2I pos)
     {
         return _visibilityStatus[pos.X][pos.Y];
     }
 
-    private bool DecidePieceVisibility(int index,PieceInstance instance,int i,int j,int sx,int sy)
+    public bool DecidePieceVisibility(int i,int j)
+    {
+        int sx = _system.GroundSize.X;
+        int sy = _system.GroundSize.Y;
+        if(i<0 || i>=sx || j<0 || j>=sy)
+            return false;
+
+        int index = i + j * sx;
+        return DecidePieceVisibility(index, i, j, sx, sy);
+    }
+    private bool DecidePieceVisibility(int index,int i,int j,int sx,int sy)
     {
         if(_lightStatus[index]!=0)
             return true;

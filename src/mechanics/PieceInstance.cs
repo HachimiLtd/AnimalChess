@@ -131,6 +131,8 @@ public abstract partial class PieceInstance : Button
 
     public void ClearHighlights()
     {
+        if(_system.Stage == TurnStage.PARAM_DECISION)
+            ClearAdditionalParamHighlights();
         foreach(PieceHighlight child in highlights)
         {
             child.ForceDestroy();

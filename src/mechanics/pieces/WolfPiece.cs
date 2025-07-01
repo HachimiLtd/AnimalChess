@@ -2,6 +2,7 @@ using Godot;
 
 public partial class WolfPiece : PieceInstance
 {
+  private static PackedScene _resWHighlight = (PackedScene)GD.Load("res://scenes/wolf_highlighter.tscn");
   public WolfPiece() : base(PieceType.WOLF) { }
   public override void CreateHighlights()
   {
@@ -66,14 +67,24 @@ public partial class WolfPiece : PieceInstance
 
   }
 
+  WolfHighlighter highlighter;
   public override void CreateParamHighlights()
   {
-    CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
+    highlighter = (WolfHighlighter)_resWHighlight.Instantiate();
+    highlighter.Initialize(_system,_gridPosition);
+    _system.MountHightlights.AddChild(highlighter);
+    highlighter.SubmitParam += HandleSubmitParam;
+    PieceHighlight highlight = CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
+    highlight.MouseEntered += highlighter.NoIndicator;
   }
 
   public override void ClearAdditionalParamHighlights()
   {
-      base.ClearAdditionalParamHighlights();
-      
+    base.ClearAdditionalParamHighlights();
+    if(highlighter != null)
+    {
+      highlighter.Destroy();
+      highlighter = null;
+    }
   }
 }

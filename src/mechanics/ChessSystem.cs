@@ -57,6 +57,8 @@ public partial class ChessSystem : Node2D
     public Node2D MountHightlights;
     public Node2D MountPieces;
 
+    public TurnStage Stage{get{return _control.Stage;}}
+
     public RoleType PlayerRole;
     public bool CurrentlyPlaying = false;
 
@@ -263,7 +265,14 @@ public partial class ChessSystem : Node2D
         }
         else
         {
-            PieceInstance instance = _pieceLayer[from.X][from.Y];
+            PieceInstance instance = _pieceLayer[to.X][to.Y];
+            if(instance.Type == PieceType.WOLF)
+                if(operation.param != Vector4I.Zero)
+                {
+                    GD.Print("Wolf param: ", operation.param);
+                    _fog.ForceSet2(new Vector2I(param.X,param.Y));
+                    _fog.UpdateFog();
+                }
             Rpc(nameof(HandleOperationEncode), from, to, param);
         }
     }
@@ -304,5 +313,10 @@ public partial class ChessSystem : Node2D
         if(_fog.CheckVisibility(pos))
             return !instance.UnknownStat;
         return false;
+    }
+
+    public bool IsGridVisible(Vector2I pos)
+    {
+        return _fog.DecidePieceVisibility(pos.X-1, pos.Y-1);
     }
 }

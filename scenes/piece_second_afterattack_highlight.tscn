@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_7pfjx"]
 [ext_resource type="Script" uid="uid://djnwcivw5eoql" path="res://src/mechanics/highlights/PieceSecondAfterattackHighlight.cs" id="2_70y4n"]
-[ext_resource type="Texture2D" uid="uid://d3frbm24otrbn" path="res://assets/sprites/test_hightlight_second_afterattack.png" id="3_7pfjx"]
+[ext_resource type="Texture2D" uid="uid://d3frbm24otrbn" path="res://assets/sprites/test_highlight_second_afterattack.png" id="3_7pfjx"]
 
 [node name="PieceSecondAfterattackHighlight" instance=ExtResource("1_7pfjx")]
 script = ExtResource("2_70y4n")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://wian0f7okpep" path="res://scenes/piece_highlight.tscn" id="1_cxjsk"]
 [ext_resource type="Script" uid="uid://burb7lqd8cg7x" path="res://src/mechanics/highlights/PieceCancelHighlight.cs" id="2_7l8ms"]
-[ext_resource type="Texture2D" uid="uid://cfqctwtc4cd12" path="res://assets/sprites/test_hightlight_cancel.png" id="2_jdbam"]
+[ext_resource type="Texture2D" uid="uid://cfqctwtc4cd12" path="res://assets/sprites/test_highlight_cancel.png" id="2_jdbam"]
 
 [node name="PieceCancelHighlight" instance=ExtResource("1_cxjsk")]
 script = ExtResource("2_7l8ms")

@@ -6,6 +6,8 @@ public partial class ChessProcessControl : Node
     public PlayerStatusDisplay PlayerStatusDisplayP1;
     public PlayerStatusDisplay PlayerStatusDisplayP2;
 
+    private bool _ended = false;
+
     [Export]
     private ChessSystem _system;
     private MultiplayerManager _multiplayer;
@@ -29,8 +31,13 @@ public partial class ChessProcessControl : Node
     {
         base._Process(delta);
 
+        if(_ended)
+            return;
+        
         switch (Stage)
         {
+            case TurnStage.ENDED:
+                return;
             case TurnStage.INITWAIT:
                 if (_multiplayer.GetPlayerCount() >= 2)
                 {
@@ -69,6 +76,12 @@ public partial class ChessProcessControl : Node
         Stage = TurnStage.INIT;
     }
 
+    public void SwitchStageEnd()
+    {
+        Stage = TurnStage.ENDED;
+        _ended = true;
+    }
+
     public void SwitchStageMove()
     {
         Stage = TurnStage.MOVE_DECISION;
@@ -87,11 +100,17 @@ public partial class ChessProcessControl : Node
     }
 
     ChessMove tempMove;
-    public void SwitchStageParam(ChessMove move)
+    public void SwitchStageParam(ChessMove move,bool pass=false)
     {
         Stage = TurnStage.PARAM_DECISION;
         tempMove = move;
 
+        if(pass)
+        {
+            SwitchStageWait(Vector4I.Zero);
+            return;
+        }
+        
         PieceInstance instance = _system.PieceLayer[move.To.X][move.To.Y];
         instance.CreateParamHighlights();
     }

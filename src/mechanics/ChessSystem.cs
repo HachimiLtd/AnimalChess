@@ -270,7 +270,10 @@ public partial class ChessSystem : Node2D
     public void HandleChessMove(ChessMove move)
     {
         ActChessMove(move.From, move.To);
-        _control.SwitchStageParam(move);
+        if(_control.Stage == TurnStage.ENDED)
+            _control.SwitchStageParam(move,true);
+        else
+            _control.SwitchStageParam(move);
     }
 
     public void HandleChessParam(Vector4I param)
@@ -366,6 +369,7 @@ public partial class ChessSystem : Node2D
 
     public void HandleNestInvasion(Vector2I position)
     {
+        _control.SwitchStageEnd();
         if( (position.X <= GroundSize.X/2 && PlayerRole == RoleType.P1) ||
             (position.X > GroundSize.X/2 && PlayerRole == RoleType.P2) )
         {

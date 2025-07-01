@@ -198,7 +198,7 @@ public partial class ChessSystem : Node2D
         if (instance == null)
             ///////////////////THIS SHOULDN'T HAPPEN//////////////////////
             return;
-        int callerId = Multiplayer.GetRemoteSenderId();
+        //int callerId = Multiplayer.GetRemoteSenderId();
         
         if(instance == HighlightOwner)
         {
@@ -259,20 +259,28 @@ public partial class ChessSystem : Node2D
         
         if(_control.Stage == TurnStage.WAITING)
         {
-            //PieceInstance instance = _pieceLayer[to.X][to.Y];
+            PieceInstance instance = _pieceLayer[from.X][from.Y];
             ActChessMove(from,to);
+            if(instance.Type == PieceType.LEOPARD && param != Vector4I.Zero)
+                ActChessMove(to, new Vector2I(param.X, param.Y));
             _control.SwitchStageMove();
         }
         else
         {
             PieceInstance instance = _pieceLayer[to.X][to.Y];
-            if(instance.Type == PieceType.WOLF)
-                if(operation.param != Vector4I.Zero)
+            if(instance.Type == PieceType.WOLF){
+                if(param != Vector4I.Zero)
                 {
-                    GD.Print("Wolf param: ", operation.param);
                     _fog.ForceSet2(new Vector2I(param.X,param.Y));
                     _fog.UpdateFog();
                 }
+            }
+            else if(instance.Type == PieceType.LEOPARD){
+                if (param != Vector4I.Zero)
+                {
+                    ActChessMove(to, new Vector2I(param.X, param.Y));
+                }
+            }
             Rpc(nameof(HandleOperationEncode), from, to, param);
         }
     }

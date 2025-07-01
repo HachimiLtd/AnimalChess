@@ -11,12 +11,14 @@ public abstract partial class PieceInstance : Button
         PSEUDO,
         RAT_TELE,
         PARAM_CANCEL,
+        SECOND,
     }
     protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
         {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
         {HighlightType.PSEUDO,(PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn")},
         {HighlightType.RAT_TELE,(PackedScene)GD.Load("res://scenes/piece_rat_tele_highlight.tscn")},
         {HighlightType.PARAM_CANCEL,(PackedScene)GD.Load("res://scenes/piece_cancel_highlight.tscn")},
+        {HighlightType.SECOND,(PackedScene)GD.Load("res://scenes/piece_second_highlight.tscn")},
     };
 
     protected ChessSystem _system;
@@ -177,12 +179,15 @@ public abstract partial class PieceInstance : Button
     }
     
     //Animation
+    private Tween _moveTween;
     public void Move(Vector2I to)
     {
         Vector2 toPos = GridSystem.GridToWorld(to);
-        Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "position", toPos, ACGlobal.ANIMATION_TIME_1);
-        tween.TweenCallback(Callable.From(UpdateDisplay)).SetDelay(ACGlobal.ANIMATION_TIME_1/2);
+        if(_moveTween != null)
+            _moveTween.Kill();
+        _moveTween = GetTree().CreateTween();
+        _moveTween.TweenProperty(this, "position", toPos, ACGlobal.ANIMATION_TIME_1);
+        _moveTween.TweenCallback(Callable.From(UpdateDisplay)).SetDelay(ACGlobal.ANIMATION_TIME_1/2);
         _gridPosition = to;
     }
     public void MoveOutSecretly(Vector2I to)
@@ -192,9 +197,11 @@ public abstract partial class PieceInstance : Button
             _animalSpr.Visible = false;
         }*/
         Vector2 toPos = GridSystem.GridToWorld(to);
-        Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,0.0f), ACGlobal.ANIMATION_TIME_1/2);
-        tween.TweenCallback(Callable.From(()=>
+        if(_moveTween != null)
+            _moveTween.Kill();
+        _moveTween = GetTree().CreateTween();
+        _moveTween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,0.0f), ACGlobal.ANIMATION_TIME_1/2);
+        _moveTween.TweenCallback(Callable.From(()=>
             {
                 Position = toPos;
                 Modulate = new Color(1.0f,1.0f,1.0f);
@@ -212,8 +219,10 @@ public abstract partial class PieceInstance : Button
         Vector2 toPos = GridSystem.GridToWorld(to);
         Position = toPos;
         Modulate = new Color(1.0f,1.0f,1.0f,0.0f);
-        Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,1.0f),
+        if(_moveTween != null)
+            _moveTween.Kill();
+        _moveTween = GetTree().CreateTween();
+        _moveTween.TweenProperty(this, "modulate", new Color(1.0f,1.0f,1.0f,1.0f),
             ACGlobal.ANIMATION_TIME_1/2).SetDelay(ACGlobal.ANIMATION_TIME_1/2);
         _gridPosition = to;
     }

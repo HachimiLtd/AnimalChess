@@ -11,7 +11,7 @@ public partial class LeopardPiece : PieceInstance
     CreateHighLightsPartial(_gridPosition + Vector2I.Left);
     CreateHighLightsPartial(_gridPosition + Vector2I.Right);
   }
-  private void CreateHighLightsPartial(Vector2I dest)
+  private void CreateHighLightsPartial(Vector2I dest,bool paramMode=false)
   {
     int x = dest.X;
     int y = dest.Y;
@@ -41,7 +41,10 @@ public partial class LeopardPiece : PieceInstance
           if (instance.Player == _player)
             return;
         }
-        CreateHighlight(dest);
+        if(paramMode)
+          CreateHighlight(dest, HighlightType.SECOND);
+        else
+          CreateHighlight(dest);
         return;
       default:
         if (_system.PieceLayer[x][y] != null)
@@ -53,11 +56,18 @@ public partial class LeopardPiece : PieceInstance
             return;
           if (!_system.IsGridKnown(dest) && instance.Type > _type)
           {
-            CreateHighlight(dest, HighlightType.PSEUDO);
+            if(paramMode)
+              ((PieceSecondHighlight)CreateHighlight(dest, HighlightType.SECOND))
+                .SetPseudo();
+            else
+              CreateHighlight(dest, HighlightType.PSEUDO);
             return;
           }
         }
-        CreateHighlight(dest);
+        if(paramMode)
+          CreateHighlight(dest, HighlightType.SECOND);
+        else
+          CreateHighlight(dest);
         return;
     }
   }
@@ -69,6 +79,31 @@ public partial class LeopardPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-    SkipSubmitParam();
+    if( !IsSkillAllowedPartial(_gridPosition + Vector2I.Down) ||
+        !IsSkillAllowedPartial(_gridPosition + Vector2I.Up) ||
+        !IsSkillAllowedPartial(_gridPosition + Vector2I.Left) ||
+        !IsSkillAllowedPartial(_gridPosition + Vector2I.Right))
+    {
+      SkipSubmitParam();
+      return;
+    }
+
+    CreateHighlight(_gridPosition,HighlightType.PARAM_CANCEL);
+    CreateHighLightsPartial(_gridPosition + Vector2I.Down, true);
+    CreateHighLightsPartial(_gridPosition + Vector2I.Up, true);
+    CreateHighLightsPartial(_gridPosition + Vector2I.Left, true);
+    CreateHighLightsPartial(_gridPosition + Vector2I.Right, true);
+  }
+
+  public bool IsSkillAllowedPartial(Vector2I pos)
+  {
+    int x = pos.X;
+    int y = pos.Y;
+    PieceInstance instance = _system.PieceLayer[x][y];
+    if (instance == null)
+      return true;
+    if (instance.Player == _player)
+      return true;
+    return false;
   }
 }

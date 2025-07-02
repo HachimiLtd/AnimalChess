@@ -23,7 +23,7 @@ public partial class WolfPiece : PieceInstance
         if (_system.PieceLayer[x][y] != null)
         {
           PieceInstance instance = _system.PieceLayer[x][y];
-          if (instance.Player == _player)
+          if (instance.Player == _player || instance.Type == PieceType.DOG)
             return;
         }
         CreateHighlight(dest);

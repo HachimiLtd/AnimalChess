@@ -16,7 +16,7 @@ public abstract partial class PieceInstance : Button
         SECOND_AFTERATTACK,
         ATTACK,
     }
-    protected static Dictionary<HighlightType,PackedScene> _resHightlights = new Dictionary<HighlightType,PackedScene>{
+    protected static Dictionary<HighlightType,PackedScene> _resHighlights = new Dictionary<HighlightType,PackedScene>{
         {HighlightType.NORMAL,(PackedScene)GD.Load("res://scenes/piece_highlight.tscn")},
         {HighlightType.PSEUDO,(PackedScene)GD.Load("res://scenes/piece_pseudo_highlight.tscn")},
         {HighlightType.RAT_TELE,(PackedScene)GD.Load("res://scenes/piece_rat_tele_highlight.tscn")},
@@ -131,7 +131,7 @@ public abstract partial class PieceInstance : Button
     protected PieceHighlight CreateHighlight(Vector2I at,HighlightType type = HighlightType.NORMAL)
     {
         _system.HighlightOwner = this;
-        PieceHighlight highlight = (PieceHighlight)_resHightlights[type].Instantiate();
+        PieceHighlight highlight = (PieceHighlight)_resHighlights[type].Instantiate();
 
         highlights.Add(highlight);
         _system.MountHightlights.AddChild(highlight);
@@ -176,7 +176,7 @@ public abstract partial class PieceInstance : Button
     {
         ClearHighlights();
         _tempLastPosition = _gridPosition;
-        if (_system.PieceLayer[dest.X][dest.Y] != null)
+        if (_system.PieceLayer[dest.X][dest.Y] != null && _system.PieceLayer[dest.X][dest.Y].Player != Player)
             _tempCapturedPiece = true;
         else
             _tempCapturedPiece = false;

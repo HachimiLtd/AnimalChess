@@ -27,6 +27,13 @@ public partial class TigerPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && _system.IsGridKnown(_gridPosition + offset))
+                        return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && !_system.IsGridKnown(_gridPosition + offset))
+                    {
+                        CreateHighlight(_gridPosition + offset, HighlightType.PSEUDO);
+                        return;
+                    }
                 }
                 CreateHighlight(_gridPosition + offset);
                 return;
@@ -80,19 +87,22 @@ public partial class TigerPiece : PieceInstance
 
     public override void CreateParamHighlights()
     {
-        if(_skillUsed){
+        if (_skillUsed)
+        {
             SkipSubmitParam();
             return;
         }
         Vector2I offset = (_gridPosition - _tempLastPosition).Clamp(-1, 1);
         Vector2I tar = _gridPosition + offset;
-        Vector2I chkBorder = _gridPosition + offset*2;
-        if (_system.GroundLayer[tar.X][tar.Y] == GroundType.BOUNDARY || 
-            _system.GroundLayer[chkBorder.X][chkBorder.Y] == GroundType.BOUNDARY){
+        Vector2I chkBorder = _gridPosition + offset * 2;
+        if (_system.GroundLayer[tar.X][tar.Y] == GroundType.BOUNDARY ||
+            _system.GroundLayer[chkBorder.X][chkBorder.Y] == GroundType.BOUNDARY)
+        {
             SkipSubmitParam();
             return;
         }
-        if (_system.PieceLayer[tar.X][tar.Y] != null){
+        if (_system.PieceLayer[tar.X][tar.Y] != null)
+        {
             SkipSubmitParam();
             return;
         }

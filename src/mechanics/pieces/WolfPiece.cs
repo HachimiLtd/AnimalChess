@@ -25,6 +25,13 @@ public partial class WolfPiece : PieceInstance
           PieceInstance instance = _system.PieceLayer[x][y];
           if (instance.Player == _player || instance.Type == PieceType.DOG)
             return;
+          if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && _system.IsGridKnown(dest))
+            return;
+          if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && !_system.IsGridKnown(dest))
+          {
+            CreateHighlight(dest, HighlightType.PSEUDO);
+            return;
+          }
         }
         CreateHighlight(dest);
         return;
@@ -71,7 +78,7 @@ public partial class WolfPiece : PieceInstance
   public override void CreateParamHighlights()
   {
     highlighter = (WolfHighlighter)_resWHighlight.Instantiate();
-    highlighter.Initialize(_system,_gridPosition);
+    highlighter.Initialize(_system, _gridPosition);
     _system.MountHightlights.AddChild(highlighter);
     highlighter.SubmitParam += HandleSubmitParam;
     PieceHighlight highlight = CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
@@ -81,7 +88,7 @@ public partial class WolfPiece : PieceInstance
   public override void ClearAdditionalParamHighlights()
   {
     base.ClearAdditionalParamHighlights();
-    if(highlighter != null)
+    if (highlighter != null)
     {
       highlighter.Destroy();
       highlighter = null;

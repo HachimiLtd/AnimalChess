@@ -11,7 +11,7 @@ public partial class LeopardPiece : PieceInstance
     CreateHighLightsPartial(_gridPosition + Vector2I.Left);
     CreateHighLightsPartial(_gridPosition + Vector2I.Right);
   }
-  private void CreateHighLightsPartial(Vector2I dest,bool paramMode=false)
+  private void CreateHighLightsPartial(Vector2I dest, bool paramMode = false)
   {
     int x = dest.X;
     int y = dest.Y;
@@ -25,8 +25,15 @@ public partial class LeopardPiece : PieceInstance
           PieceInstance instance = _system.PieceLayer[x][y];
           if (instance.Player == _player)
             return;
+          if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && _system.IsGridKnown(dest))
+            return;
+          if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && !_system.IsGridKnown(dest))
+          {
+            CreateHighlight(dest, HighlightType.PSEUDO);
+            return;
+          }
         }
-        if(paramMode)
+        if (paramMode)
           CreateHighlight(dest, HighlightType.SECOND);
         else
           CreateHighlight(dest);
@@ -44,7 +51,7 @@ public partial class LeopardPiece : PieceInstance
           if (instance.Player == _player)
             return;
         }
-        if(paramMode)
+        if (paramMode)
           CreateHighlight(dest, HighlightType.SECOND);
         else
           CreateHighlight(dest);
@@ -59,7 +66,7 @@ public partial class LeopardPiece : PieceInstance
             return;
           if (!_system.IsGridKnown(dest) && instance.Type > _type)
           {
-            if(paramMode)
+            if (paramMode)
               ((PieceSecondHighlight)CreateHighlight(dest, HighlightType.SECOND))
                 .SetPseudo();
             else
@@ -67,7 +74,7 @@ public partial class LeopardPiece : PieceInstance
             return;
           }
         }
-        if(paramMode)
+        if (paramMode)
           CreateHighlight(dest, HighlightType.SECOND);
         else
           CreateHighlight(dest);
@@ -82,14 +89,14 @@ public partial class LeopardPiece : PieceInstance
 
   public override void CreateParamHighlights()
   {
-    if((_system.PlayerRole == RoleType.P1 && _gridPosition.X <= _system.GroundSize.X/2) ||
-       (_system.PlayerRole == RoleType.P2 && _gridPosition.X >  _system.GroundSize.X/2) )
+    if ((_system.PlayerRole == RoleType.P1 && _gridPosition.X <= _system.GroundSize.X / 2) ||
+       (_system.PlayerRole == RoleType.P2 && _gridPosition.X > _system.GroundSize.X / 2))
     {
       SkipSubmitParam();
       return;
     }
 
-    if( !IsSkillAllowedPartial(_gridPosition + Vector2I.Down) ||
+    if (!IsSkillAllowedPartial(_gridPosition + Vector2I.Down) ||
         !IsSkillAllowedPartial(_gridPosition + Vector2I.Up) ||
         !IsSkillAllowedPartial(_gridPosition + Vector2I.Left) ||
         !IsSkillAllowedPartial(_gridPosition + Vector2I.Right))
@@ -98,7 +105,7 @@ public partial class LeopardPiece : PieceInstance
       return;
     }
 
-    CreateHighlight(_gridPosition,HighlightType.PARAM_CANCEL);
+    CreateHighlight(_gridPosition, HighlightType.PARAM_CANCEL);
     CreateHighLightsPartial(_gridPosition + Vector2I.Down, true);
     CreateHighLightsPartial(_gridPosition + Vector2I.Up, true);
     CreateHighLightsPartial(_gridPosition + Vector2I.Left, true);

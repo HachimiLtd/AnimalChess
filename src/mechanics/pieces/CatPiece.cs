@@ -26,6 +26,13 @@ public partial class CatPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player || instance.Type == PieceType.DOG)
                         return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && _system.IsGridKnown(dest))
+                        return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && instance.Type > _type && !_system.IsGridKnown(dest))
+                    {
+                        CreateHighlight(dest, HighlightType.PSEUDO);
+                        return;
+                    }
                 }
                 CreateHighlight(dest);
                 return;

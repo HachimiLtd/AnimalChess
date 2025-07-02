@@ -20,22 +20,22 @@ public partial class ElephantPiece : PieceInstance
         int x = dest.X;
         int y = dest.Y;
 
-        if(!skillUsed && _system.GroundLayer[x][y] != GroundType.BOUNDARY)
+        if (!skillUsed && _system.GroundLayer[x][y] != GroundType.BOUNDARY)
         {
-            Vector2I atkPos = -_gridPosition + 2*dest;
+            Vector2I atkPos = -_gridPosition + 2 * dest;
 
 #pragma warning disable CS0642 // Possible mistaken empty statement
             if (_system.GroundLayer[atkPos.X][atkPos.Y] == GroundType.BOUNDARY ||
-                _system.GroundLayer[atkPos.X][atkPos.Y] == GroundType.FLOODED);
+                _system.GroundLayer[atkPos.X][atkPos.Y] == GroundType.FLOODED) ;
 #pragma warning restore CS0642 // Possible mistaken empty statement
 
-            else if( !_system.IsGridVisible(atkPos) ||
-                ( _system.PieceLayer[atkPos.X][atkPos.Y] != null &&
+            else if (!_system.IsGridVisible(atkPos) ||
+                (_system.PieceLayer[atkPos.X][atkPos.Y] != null &&
                   _system.PieceLayer[atkPos.X][atkPos.Y].Player != _player &&
-                  _system.PieceLayer[atkPos.X][atkPos.Y].Type != PieceType.RAT ) )
+                  _system.PieceLayer[atkPos.X][atkPos.Y].Type != PieceType.RAT))
             {
                 PieceAttackHighlight highlight = (PieceAttackHighlight)CreateHighlight(atkPos, HighlightType.ATTACK);
-                highlight.PAHInitialize((Vector4I param)=>
+                highlight.PAHInitialize((Vector4I param) =>
                 {
                     _tempParams = param;
                     skillUsed = true;
@@ -54,6 +54,13 @@ public partial class ElephantPiece : PieceInstance
                     PieceInstance instance = _system.PieceLayer[x][y];
                     if (instance.Player == _player)
                         return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && (instance.Type > _type || instance.Type == PieceType.RAT) && _system.IsGridKnown(dest))
+                        return;
+                    if (_system.RoleArrangement[x - 1][y - 1] != _player && (instance.Type > _type || instance.Type == PieceType.RAT) && !_system.IsGridKnown(dest))
+                    {
+                        CreateHighlight(dest, HighlightType.PSEUDO);
+                        return;
+                    }
                 }
                 CreateHighlight(dest);
                 return;
